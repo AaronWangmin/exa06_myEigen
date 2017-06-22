@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 3.4.2, 2017-06-22T09:44:37. -->
+=======
+<!-- Written by QtCreator 3.4.2, 2017-06-22T10:25:50. -->
+>>>>>>> GPSHead
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
