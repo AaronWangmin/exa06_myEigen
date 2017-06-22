@@ -6,6 +6,7 @@ class EphemerisGPS
 {
 public:
     EphemerisGPS();
+
 };
 
 #endif // EPHEMERISGPS_H

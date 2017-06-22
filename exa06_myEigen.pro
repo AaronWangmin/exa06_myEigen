@@ -19,10 +19,18 @@ SOURCES += main.cpp \
     adjustparameter.cpp \
     weightobservation.cpp \
     coefficientb.cpp \
-    ephemerisgps.cpp
+<<<<<<< HEAD
+    ephemerisgps.cpp \
+=======
+>>>>>>> master
+    gpshead.cpp
 
 HEADERS += \
     adjustparameter.h \
     weightobservation.h \
     coefficientb.h \
-    ephemerisgps.h
+<<<<<<< HEAD
+    ephemerisgps.h \
+=======
+>>>>>>> master
+    gpshead.h
