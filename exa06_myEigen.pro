@@ -11,6 +11,7 @@ QT       -= gui
 TARGET = exa06_myEigen
 CONFIG   += console
 CONFIG   -= app_bundle
+CONFIG   += c++11
 
 TEMPLATE = app
 
@@ -19,10 +20,14 @@ SOURCES += main.cpp \
     adjustparameter.cpp \
     weightobservation.cpp \
     coefficientb.cpp \
-    gpshead.cpp
+    gpshead.cpp \
+    ephemerisgps.cpp \
+    broadcast.cpp
 
 HEADERS += \
     adjustparameter.h \
     weightobservation.h \
     coefficientb.h \
-    gpshead.h
+    gpshead.h \
+    ephemerisgps.h \
+    broadcast.h

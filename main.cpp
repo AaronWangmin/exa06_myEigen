@@ -1,10 +1,13 @@
 #include <QCoreApplication>
 
 #include <iostream>
+using namespace std;
+
 #include "weightobservation.h"
 #include "coefficientb.h"
 #include "adjustparameter.h"
-using namespace std;
+#include "broadcast.h"
+
 
 
 
@@ -47,6 +50,8 @@ int main(int argc, char *argv[])
     WeightObservation weight1(6,p);
     AdjustParameter adj(coefB,weight1);    
     adj.printResult();
+
+    Broadcast brdt("D:/exam_cs106/code_aaron_cs106/exa05_myGPS/brdc1730.16n");
 
 
     return a.exec();

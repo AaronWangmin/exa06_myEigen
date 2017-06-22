@@ -1,7 +1,7 @@
 #ifndef GPSHEAD
 #define GPSHEAD
 
-struct eph_t{                   // GPS broadcast ephemeris type,based on rinex2.11
+struct eph_t{                   // GPS broadcast ephemeris type,based on rinex2.11,(34 variable)
 
     // head
     int week;
@@ -22,7 +22,7 @@ struct eph_t{                   // GPS broadcast ephemeris type,based on rinex2.
     double reserved,reserved01;
 
     eph_t();                    // ? needed ?
-    eph_t(const &eph_t);        // ? needed ?
+    eph_t(const eph_t &rhs);    // ? needed ?
     //~eph_t();                 // ? needed ?
 };
 
