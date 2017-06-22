@@ -18,9 +18,11 @@ TEMPLATE = app
 SOURCES += main.cpp \
     adjustparameter.cpp \
     weightobservation.cpp \
-    coefficientb.cpp
+    coefficientb.cpp \
+    gpshead.cpp
 
 HEADERS += \
     adjustparameter.h \
     weightobservation.h \
-    coefficientb.h
+    coefficientb.h \
+    gpshead.h
