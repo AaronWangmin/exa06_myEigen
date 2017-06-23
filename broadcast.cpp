@@ -45,14 +45,13 @@ int Broadcast::parseNavHead(const string &strline)
 
 void Broadcast::parseNavData(const vector<string> &strEph, eph_t &eph)
 {
-    // the 1th line of ephemeris record.
-
+        // the 1th line of ephemeris record.
         string temp = strEph.at(0);
         eph.sat               = std::stoi( temp.substr(0,2));
 
-//        GTime gtime;
-//        gtime.fromString(QString::fromStdString(temp.substr(3,19)),17);
-//        eph.toc = gtime.getSecond();
+        gtime_t gtime;
+        str2time(temp,3,19,gtime);
+        eph.toc               = gtime.time + gtime.sec;         // ! posible erro!
 
         eph.af0               = extractDouble(temp,22,19);
         eph.af1               = extractDouble(temp,41,19);
@@ -74,9 +73,7 @@ void Broadcast::parseNavData(const vector<string> &strEph, eph_t &eph)
 
         // the 4th line
         temp = strEph.at(3);
-//        gtime.fromString(QString::fromStdString(temp.substr(3,19)),17);
-//        eph.toe = gtime.getSecond();
-
+        eph.toe               = extractDouble(temp,3,19);       // ! posible erro!
         eph.Cic               = extractDouble(temp,22,19);
         eph.OMG0              = extractDouble(temp,41,19);
         eph.Cis               = extractDouble(temp,60,19);
@@ -104,12 +101,9 @@ void Broadcast::parseNavData(const vector<string> &strEph, eph_t &eph)
 
         // the 8th line
         temp = strEph.at(7);
-//        gtime.fromString(QString::fromStdString(temp.substr(3,19)),17);
-//        eph.ttr               = gtime.getSecond();
-
+        eph.ttr               = extractDouble(temp,3,19);       // ! posible erro!
         eph.fit               = extractDouble(temp,22,19);
         eph.reserved          = extractDouble(temp,41,19);
         eph.reserved01        = extractDouble(temp,60,19);
-
 }
 

@@ -2,11 +2,19 @@
 #define GPSHEAD
 
 #include <string>
+#include <vector>
+#include <ctime>
+#include <math.h>
 using namespace std;
+
+/* constants -----------------------------------------------------------------*/
+const static double GM = 3.986004415E+14;      // 地球引力常数
+const static double gpst0[]={1980,1, 6,0,0,0}; /* gps time reference */
+
 
 struct gtime_t{
     time_t time;                // times expressed by standard time_t
-    double second;              // fraction of second under 1s
+    double sec;                 // fraction of second under 1s
 
     gtime_t();
     gtime_t(const gtime_t &rhs);
@@ -36,8 +44,15 @@ struct eph_t{                   // GPS broadcast ephemeris type,based on rinex2.
 };
 
 
-// extract a double from string included 'D' in rinex file.
-double extractDouble(const string& str,int pos,int npos);
+
+extern double extractDouble(const string& str,int pos,int npos);        // ? extern
+extern void strSplit(const string& s,
+                     vector<string>& v,const string& c);                // bad work!!!
+extern int str2time(const string& str,int pos,int npos,gtime_t& t);
+extern double timeDiff(gtime_t t1, gtime_t t2);
+extern gtime_t epoch2time(const double *ep);
+extern gtime_t gpst2time(int week, double sec);
+
 
 
 #endif // GPSHEAD
