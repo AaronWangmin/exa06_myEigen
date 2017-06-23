@@ -1,14 +1,27 @@
 #include "gpshead.h"
 
+gtime_t::gtime_t()
+    :time(),
+     second(0)
+{
+
+}
+
+gtime_t::gtime_t(const gtime_t &rhs)
+{
+    this->time   = rhs.time;
+    this->second = rhs.second;
+}
+
 eph_t::eph_t()
-    :week(0),sat(0),toc(0),
+    :sat(0),toc(0),
      af0(0),af1(0),af2(0),
      iode(0),Crs(0),Deln(0),M0(0),
      Cuc(0),e(0),Cus(0),A(0),
      toe(0),
      Cic(0),OMG0(0),Cis(0),
      i0(0),Crc(0),omg(0),OMGd(0),
-     iDOT(0),code(0),toes(0),flag(0),
+     iDOT(0),code(0),week(0),flag(0),
      sva(0),svh(0),tgd(0),iodc(0),
      ttr(0),
      fit(0),
@@ -49,9 +62,15 @@ eph_t::eph_t(const eph_t &rhs)
     this->svh           = rhs.svh;
     this->tgd           = rhs.tgd;
     this->toc           = rhs.toc;
-    this->toe           = rhs.toe;
-    this->toes          = rhs.toes;
+    this->toe           = rhs.toe;    
     this->ttr           = rhs.ttr;
     this->week          = rhs.week;
+}
+
+double extractDouble(const string &str,int pos, int npos)
+{
+    string temp = str.substr(pos,npos);
+    temp.replace(15,1,"E");
+    return std::stod(temp);
 }
 

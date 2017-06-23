@@ -20,13 +20,15 @@ public:
 //    Broadcast();                              // ? needed ?
     Broadcast(const string &navFile);           // from the rinex file.
 
-    eph_t getEph(double givenTime) const;       // added...
+    eph_t getEph(double givenTime) const;       // added..., ? return a struct data?
 
 
 private:
-    vector<eph_t> ephRecord;    // ? vector default initialization ?
+    vector<eph_t> ephRecord;                    // ? vector default initialization ?
 
-    void parseNavHead(const string &strline);   // only one(gps week) now. added...
+    int parseNavHead(const string &strline);   // added...
+    void parseNavData(const vector<string> &strEph,
+                       eph_t &eph);             // parse one record of the NavData.? return a struct data?
 
 };
 
