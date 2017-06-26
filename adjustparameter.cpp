@@ -32,7 +32,7 @@ AdjustParameter::AdjustParameter(const CoefficientB &coefficient, const WeightOb
 
 
 
-VectorXd AdjustParameter::getX() const
+const VectorXd& AdjustParameter::getX() const
 {
     return X;
 }
@@ -52,19 +52,3 @@ void AdjustParameter::printResult() const
     std::cout << sigma0 << std::endl;
 
 }
-
-
-//MatrixXd AdjustParameter::getN() const
-//{
-
-//}
-
-//VectorXd AdjustParameter::get_x() const
-//{
-
-//}
-
-//double AdjustParameter::getSigma02() const
-//{
-
-//}

@@ -9,9 +9,9 @@ class CoefficientB
 public:
     CoefficientB(const MatrixXd &coefB,const VectorXd &coefl);
 
-    MatrixXd getB() const;      // get coefficient Matrix B
-    VectorXd getl() const;      // get const Vector l
-    VectorXd getX0() const;     // get X0
+    const MatrixXd& getB() const;      // get coefficient Matrix B
+    const VectorXd& getl() const;      // get const Vector l
+    const VectorXd& getX0() const;     // get X0
 
     void printBL() const;
 

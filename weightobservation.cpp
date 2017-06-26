@@ -30,7 +30,7 @@ int WeightObservation::getCountObservation() const
     return n;
 }
 
-MatrixXd WeightObservation::getWeight() const
+const MatrixXd& WeightObservation::getWeight() const
 {
    return p;
 }

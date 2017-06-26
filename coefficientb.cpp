@@ -11,17 +11,17 @@ CoefficientB::CoefficientB(const MatrixXd &coefB, const VectorXd &coefl)
 
 }
 
-MatrixXd CoefficientB::getB() const
+const MatrixXd& CoefficientB::getB() const
 {
     return B;
 }
 
-VectorXd CoefficientB::getl() const
+const VectorXd& CoefficientB::getl() const
 {
     return l;
 }
 
-VectorXd CoefficientB::getX0() const
+const VectorXd& CoefficientB::getX0() const
 {
     return X0;
 }
