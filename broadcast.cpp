@@ -31,6 +31,11 @@ Broadcast::Broadcast(const string &navFile)
    }
 }
 
+const vector<eph_t>& Broadcast::getEphRecord() const
+{
+    return ephRecord;
+}
+
 int Broadcast::parseNavHead(const string &strline)
 {
     // need to add a struct of navHead_t to store the NavHead......

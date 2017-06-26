@@ -1,6 +1,10 @@
 #ifndef GPSHEAD
 #define GPSHEAD
 
+#include <Eigen/Dense>
+using namespace Eigen;
+
+#include <iostream>
 #include <string>
 #include <vector>
 #include <ctime>

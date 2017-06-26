@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     coefficientb.cpp \
     gpshead.cpp \
     ephemerisgps.cpp \
-    broadcast.cpp
+    broadcast.cpp \
+    positionsat.cpp
 
 HEADERS += \
     adjustparameter.h \
@@ -30,4 +31,5 @@ HEADERS += \
     coefficientb.h \
     gpshead.h \
     ephemerisgps.h \
-    broadcast.h
+    broadcast.h \
+    positionsat.h
