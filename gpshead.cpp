@@ -1,7 +1,7 @@
 #include "gpshead.h"
 
 gtime_t::gtime_t()
-    :time(),
+    :time(0),
      sec(0)
 {
 
@@ -14,10 +14,10 @@ gtime_t::gtime_t(const gtime_t &rhs)
 }
 
 eph_t::eph_t()
-    :sat(0),toc(0),
+    :prn(0),toc(0),
      af0(0),af1(0),af2(0),
      iode(0),Crs(0),Deln(0),M0(0),
-     Cuc(0),e(0),Cus(0),A(0),
+     Cuc(0),e(0),Cus(0),sqrtA(0),
      toe(0),
      Cic(0),OMG0(0),Cis(0),
      i0(0),Crc(0),omg(0),OMGd(0),
@@ -31,8 +31,18 @@ eph_t::eph_t()
 }
 
 eph_t::eph_t(const eph_t &rhs)
+{    
+   eph_t::assigment(rhs);
+}
+
+eph_t& eph_t::operator =(const eph_t &rhs)
 {
-    this->A             = rhs.A;
+    eph_t::assigment(rhs);
+    return *this;
+}
+
+void eph_t::assigment(const eph_t &rhs)
+{
     this->af0           = rhs.af0;
     this->af1           = rhs.af1;
     this->af2           = rhs.af2;
@@ -55,14 +65,15 @@ eph_t::eph_t(const eph_t &rhs)
     this->omg           = rhs.omg;
     this->OMG0          = rhs.OMG0;
     this->OMGd          = rhs.OMGd;
+    this->prn           = rhs.prn;
     this->reserved      = rhs.reserved;
     this->reserved01    = rhs.reserved01;
-    this->sat           = rhs.sat;
+    this->sqrtA         = rhs.sqrtA;
     this->sva           = rhs.sva;
     this->svh           = rhs.svh;
     this->tgd           = rhs.tgd;
     this->toc           = rhs.toc;
-    this->toe           = rhs.toe;    
+    this->toe           = rhs.toe;
     this->ttr           = rhs.ttr;
     this->week          = rhs.week;
 }

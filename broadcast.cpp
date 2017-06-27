@@ -52,7 +52,7 @@ void Broadcast::parseNavData(const vector<string> &strEph, eph_t &eph)
 {
         // the 1th line of ephemeris record.
         string temp = strEph.at(0);
-        eph.sat               = std::stoi( temp.substr(0,2));
+        eph.prn               = std::stoi( temp.substr(0,2));
 
         gtime_t gtime;
         str2time(temp,3,19,gtime);
@@ -74,11 +74,11 @@ void Broadcast::parseNavData(const vector<string> &strEph, eph_t &eph)
         eph.Cuc               = extractDouble(temp,3,19);
         eph.e                 = extractDouble(temp,22,19);
         eph.Cus               = extractDouble(temp,41,19);
-        eph.A                 = extractDouble(temp,60,19);
+        eph.sqrtA             = extractDouble(temp,60,19);
 
         // the 4th line
         temp = strEph.at(3);
-        eph.toe               = extractDouble(temp,3,19);       // ! posible erro!
+        double sec            = extractDouble(temp,3,19);       // seconds of week. ! posible erro!
         eph.Cic               = extractDouble(temp,22,19);
         eph.OMG0              = extractDouble(temp,41,19);
         eph.Cis               = extractDouble(temp,60,19);
@@ -96,6 +96,9 @@ void Broadcast::parseNavData(const vector<string> &strEph, eph_t &eph)
         eph.code              = extractDouble(temp,22,19);
         eph.week              = extractDouble(temp,41,19);
         eph.flag              = extractDouble(temp,60,19);
+
+        gtime_t toeTemp(gpst2time(eph.week,sec));
+        eph.toe               = toeTemp.time + toeTemp.sec;
 
         // the 7th line
         temp = strEph.at(6);
