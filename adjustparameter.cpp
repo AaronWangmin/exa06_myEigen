@@ -50,5 +50,4 @@ void AdjustParameter::printResult() const
 
     std::cout << "   Adjustment result: sigma0   " << std::endl;
     std::cout << sigma0 << std::endl;
-
 }

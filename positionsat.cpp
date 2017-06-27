@@ -26,7 +26,6 @@ void PositionSat::calculateFromBroadcast(int prn,double givenTime, const Broadca
     else if(tk < -302400)     tk = 302400 + 604800;
     else                      tk = tk;
 
-
     // 计算卫星平近点角 Mk
     double A  = pow(eph.sqrtA,2);       // 卫星轨道长半轴
     double n0 = sqrt(GM/ pow(A,3));     // 计算平角速度

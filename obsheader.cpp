@@ -1,0 +1,49 @@
+#include "obsheader.h"
+ObsHeader::ObsHeader()
+    :countObsTypes(0),
+     leapSeconds(0)         // ? vector<string> obsTypes?
+{
+
+}
+
+ObsHeader::ObsHeader(const ObsHeader &rhs)
+{
+    assigment(rhs);                             // ? is ok ?
+}
+
+ObsHeader& ObsHeader::operator =(const ObsHeader &rhs)
+{
+    assigment(rhs);
+    return *this;                               // ? is ok ?
+}
+
+/**
+ * @brief ObsHeader::parseObsHeader
+ * @param strTemp
+ * @return 0:ok, -1:false
+ */
+int ObsHeader::parseObsHeader(const string &strTemp)     // ? needed initializaton list?
+{
+    string lable = strline.substr(60);
+
+    if(string::npos != lable.find("# / TYPES OF OBSERV")){
+        countObsTypes = static_cast<int>( extractDouble(strTemp,0,6));
+
+
+
+        return 0;
+    }
+
+
+    else if(string::npos != lable.find("END OF HEADER")) return -1;
+
+}
+
+
+void ObsHeader::assigment(const ObsHeader &rhs)
+{
+    this->countObsTypes = rhs.countObsTypes;
+    this->obsTypes      = rhs.obsTypes;
+    this->leapSeconds   = rhs.leapSeconds;
+}
+

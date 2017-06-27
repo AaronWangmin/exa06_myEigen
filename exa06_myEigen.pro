@@ -21,15 +21,17 @@ SOURCES += main.cpp \
     weightobservation.cpp \
     coefficientb.cpp \
     gpshead.cpp \
-    ephemerisgps.cpp \
     broadcast.cpp \
-    positionsat.cpp
+    positionsat.cpp \
+    obsdatafile.cpp \
+    obsheader.cpp
 
 HEADERS += \
     adjustparameter.h \
     weightobservation.h \
     coefficientb.h \
     gpshead.h \
-    ephemerisgps.h \
     broadcast.h \
-    positionsat.h
+    positionsat.h \
+    obsdatafile.h \
+    obsheader.h
