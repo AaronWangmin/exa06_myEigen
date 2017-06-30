@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     broadcast.cpp \
     positionsat.cpp \
     obsdatafile.cpp \
-    obsheader.cpp
+    obsheader.cpp \
+    obsblock.cpp
 
 HEADERS += \
     adjustparameter.h \
@@ -34,4 +35,5 @@ HEADERS += \
     broadcast.h \
     positionsat.h \
     obsdatafile.h \
-    obsheader.h
+    obsheader.h \
+    obsblock.h

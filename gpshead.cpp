@@ -78,6 +78,78 @@ void eph_t::assigment(const eph_t &rhs)
     this->week          = rhs.week;
 }
 
+obsDesc_t::obsDesc_t()
+    :obsDescType(OBS_DESC_TYPE::C),
+     obsDescBand(OBS_DESC_BAND::L1)
+{
+
+}
+
+obsDesc_t::obsDesc_t(const obsDesc_t &rhs)
+{
+    assigment(rhs);
+}
+
+obsDesc_t& obsDesc_t::operator =(const obsDesc_t &rhs){
+    assigment(rhs);
+    return *this;
+}
+
+void obsDesc_t::assigment(const obsDesc_t &rhs)
+{
+    this->obsDescType = rhs.obsDescType;
+    this->obsDescBand = rhs.obsDescBand;
+}
+
+obsTypes_t::obsTypes_t()
+    :sysType(SYS_CODE::N),
+     countObsTypes(0)
+{
+
+}
+
+obsTypes_t::obsTypes_t(const obsTypes_t &rhs)
+{
+    assigment(rhs);
+}
+
+obsTypes_t& obsTypes_t::operator =(const obsTypes_t &rhs)
+{
+    assigment(rhs);
+    return *this;
+}
+
+void obsTypes_t::assigment(const obsTypes_t &rhs)
+{
+    this->sysType       = rhs.sysType;
+    this->countObsTypes = rhs.countObsTypes;
+    this->obsDesclist   = rhs.obsDesclist;
+}
+
+obsat_t::obsat_t()
+    :prn(0)
+{
+
+}
+
+obsat_t::obsat_t(const obsat_t &rhs)
+{
+    assigment(rhs);
+}
+
+obsat_t& obsat_t::operator =(const obsat_t &rhs)
+{
+    assigment(rhs);
+    return *this;
+}
+
+void obsat_t::assigment(const obsat_t &rhs)
+{
+    this->prn      = rhs.prn;
+    this->obsValue = rhs.obsValue;
+}
+
+
 /**
  * @brief extractDouble,
  * extract a double from string included 'D' in rinex file.
@@ -89,7 +161,9 @@ void eph_t::assigment(const eph_t &rhs)
 extern double extractDouble(const string &str,int pos, int npos)
 {
     string temp = str.substr(pos,npos);
-    temp.replace(15,1,"E");
+    if(string::npos != temp.find('E')){
+       temp.replace(15,1,"E");
+    }
     return std::stod(temp);
 }
 
@@ -114,25 +188,34 @@ extern int str2time(const string& str,int pos,int npos,gtime_t& t)
 }
 
 /* split a string -------------------------------------------------------------
- * bad work!!!!!!!!!!!!!!!!!!!!!!!
 * split string to serveral substring by pattern
-* args   : string &str        I   string ("aa bb cc")
-*          string &splited    O   string ("aa" ,"bb","cc")
+* args   : string &str        I   string ("  aa bb    cc  ")
+*          char   c           I   char (' ')
+*                 v           O   string ("aa","bb","cc")
 *-----------------------------------------------------------------------------*/
-extern void strSplit(const string& s,
-                     vector<string>& v,const string& c)
+extern void strSplit(vector<string>& strlist,const string& str,char c)
 {
-    string::size_type pos1,pos2;
-    pos1 = 0;
-    pos2 = s.find(c);
+    string::const_iterator it;
+    for(it = str.begin(); it != str.end(); it++){
+        string::const_iterator head,tail;
+        for(head = it;head != str.end();head++){              // 查找第一个 不等于 分割符的字符。
+            if((*head) != c) break;
+        }
 
-    while(string::npos != pos2){
-        v.push_back(s.substr(pos1,pos2-pos1));
-        pos1 = pos2 + c.size();
-        pos2 = s.find(c,pos1);
+        string result;
+        for(tail = head; tail != str.end();tail++){           // 查找第一个 等于 分割符的字符。
+            if((*tail) != c)    { result += (*tail);}
+
+            if((*tail) == c)    {
+                it = tail;
+                break;
+            }
+        }
+
+        if(0 != result.size()){
+            strlist.push_back(result);
+        }
     }
-    if(pos1 != s.length())
-        v.push_back(s.substr(pos1));
 }
 
 /* convert calendar day/time to time -------------------------------------------

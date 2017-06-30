@@ -2,6 +2,7 @@
 #define OBSDATAFILE_H
 
 #include "obsheader.h"
+#include "obsblock.h"
 
 /**
  * @brief The ObsDataFile class
@@ -16,8 +17,7 @@ public:
 
 private:
     ObsHeader obsHeader;
-//    ObsDataRecord;
-
+    vector<ObsBlock> obsDataRecord;
 };
 
 #endif // OBSDATAFILE_H

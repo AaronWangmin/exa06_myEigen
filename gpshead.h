@@ -19,6 +19,41 @@ const static double OMEGA_E = 7.2921151467E-5;      // 地球自转角速度
 
 const static double gpst0[]={1980,1, 6,0,0,0}; /* gps time reference */
 
+enum class SYS_CODE{          // Satellite system code,based rinex3.03, rinex2.11
+    N  = 0,             // noe
+    G  = 1,             // GPS
+    C  = 2,             // BeiDou
+    R  = 4,             // Glonass
+    E  = 8,             // Golleo
+    S  = 10,            // SBAS
+    A  = 16             // ALL
+};
+
+enum class OBS_DESC_TYPE{          // Observation descript: TYPE,based rinex3.03, rinex2.11
+    C   = 0,            // Code/ Pseudorange
+    L   = 1,            // Phrase
+    D   = 2,            // Doppler
+    S   = 4,            // Raw signal strength(carrier to noise radio)
+    I   = 8,            // Ionosphere phase delay
+    X   = 10            // Receiver channel number
+};
+
+enum class OBS_DESC_BAND{          // Observation descript: BAND,based rinex3.03, rinex2.11
+    L1  = 1,            // L1(GPS,QZSS,SBAS),G1(GLO),E1(GAL)
+    L2  = 2,            // L2(GPS,QZSS),G2(GLO),B1(BDS)
+    L5  = 5,            // L5(GPS,QZSS,SBAS),E5a(GAL),L5(IRNSS)
+    E6  = 6,            // E6(GAL),LEX(QZSS),B3(BDS)
+    B2  = 7,            // E5b(GAL),B2(BDS)
+    E5  = 8,            // E5a+b(GAL)
+    S   = 9,            // (IRNSS)
+    A   = 0             // ALL
+};
+
+enum class OBS_DESC_ATTRIBUTE{     // Observation descript: Attribute,based rinex3.03, rinex2.11
+    // added...
+};
+
+
 
 struct gtime_t{
     time_t time;                // times expressed by standard time_t
@@ -55,11 +90,48 @@ private:
     void assigment(const eph_t &rhs);
 };
 
+struct obsDesc_t{
+    OBS_DESC_TYPE obsDescType;
+    OBS_DESC_BAND obsDescBand;
+//    OBS_DESC_ATTRIBUTE obsDescAtti;       // added... (based on rinex3.11)
+
+    obsDesc_t();
+    obsDesc_t(const obsDesc_t &rhs);
+    obsDesc_t& operator=(const obsDesc_t &rhs);
+
+private:
+    void assigment(const obsDesc_t &rhs);
+};
+
+struct obsTypes_t{              // SYS/#/OBSTYPES, based rinex3.03,can be used to rinex2.11
+    SYS_CODE sysType;
+    int countObsTypes;
+    vector<obsDesc_t> obsDesclist;
+
+    obsTypes_t();
+    obsTypes_t(const obsTypes_t &rhs);
+    obsTypes_t& operator=(const obsTypes_t &rhs);
+
+private:
+    void assigment(const obsTypes_t &rhs);
+
+};
+
+struct obsat_t{
+    int prn;
+    vector<double> obsValue;        // ? should be update by key-value(L1:21170728.140)
+
+    obsat_t();
+    obsat_t(const obsat_t &rhs);
+    obsat_t& operator=(const obsat_t &rhs);
+
+private:
+    void assigment(const obsat_t &rhs);
+};
 
 
 extern double extractDouble(const string& str,int pos,int npos);        // ? extern
-extern void strSplit(const string& s,
-                     vector<string>& v,const string& c);                // bad work!!!
+extern void strSplit(vector<string>& strlist,const string& str,char c);
 extern int str2time(const string& str,int pos,int npos,gtime_t& t);
 extern double timeDiff(gtime_t t1, gtime_t t2);
 extern gtime_t epoch2time(const double *ep);

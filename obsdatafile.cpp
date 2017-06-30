@@ -16,19 +16,21 @@ void ObsDataFile::fromObsFile(const string &obsFile)
         string strline;
         while(!fs.eof()){                                // parse the Obs header.
             getline(fs,strline);
-            ObsHeader obsHeader;
-            if( -1 == obsHeader.parseObsHeader(strline)) break;
+            if( -1 == obsHeader.parseObsHeader(strline)) break; // end of header
         }
 
         while(!fs.eof()){
-            vector<string> strEph;                       // extract one ephemeris record from 8 lines.
+            vector<string> strEph;                       // extract one ephoch record from N lines.
+            getline(fs,strline);
+
+
             for(int i = 0; i < 8; i++){
                 getline(fs,strline);
                 strEph.push_back(strline);
             }
-            eph_t eph;
+/*            eph_t eph;
             parseNavData(strEph,eph);                    // parse the Nav data record.
-            ephRecord.push_back(eph);                    // added a Nav data record to a vector.
+            ephRecord.push_back(eph);  */                  // added a Nav data record to a vector.
         }
 
         fs.close();
