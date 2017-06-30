@@ -126,24 +126,24 @@ void obsTypes_t::assigment(const obsTypes_t &rhs)
     this->obsDesclist   = rhs.obsDesclist;
 }
 
-obsat_t::obsat_t()
+epochRecord_t::epochRecord_t()
     :prn(0)
 {
 
 }
 
-obsat_t::obsat_t(const obsat_t &rhs)
+epochRecord_t::epochRecord_t(const epochRecord_t &rhs)
 {
     assigment(rhs);
 }
 
-obsat_t& obsat_t::operator =(const obsat_t &rhs)
+epochRecord_t& epochRecord_t::operator =(const epochRecord_t &rhs)
 {
     assigment(rhs);
     return *this;
 }
 
-void obsat_t::assigment(const obsat_t &rhs)
+void epochRecord_t::assigment(const epochRecord_t &rhs)
 {
     this->prn      = rhs.prn;
     this->obsValue = rhs.obsValue;

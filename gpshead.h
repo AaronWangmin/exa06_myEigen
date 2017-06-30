@@ -117,16 +117,16 @@ private:
 
 };
 
-struct obsat_t{
+struct epochRecord_t{
     int prn;
     vector<double> obsValue;        // ? should be update by key-value(L1:21170728.140)
 
-    obsat_t();
-    obsat_t(const obsat_t &rhs);
-    obsat_t& operator=(const obsat_t &rhs);
+    epochRecord_t();
+    epochRecord_t(const epochRecord_t &rhs);
+    epochRecord_t& operator=(const epochRecord_t &rhs);
 
 private:
-    void assigment(const obsat_t &rhs);
+    void assigment(const epochRecord_t &rhs);
 };
 
 

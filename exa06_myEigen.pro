@@ -25,7 +25,7 @@ SOURCES += main.cpp \
     positionsat.cpp \
     obsdatafile.cpp \
     obsheader.cpp \
-    obsblock.cpp
+    epochrecord.cpp
 
 HEADERS += \
     adjustparameter.h \
@@ -36,4 +36,4 @@ HEADERS += \
     positionsat.h \
     obsdatafile.h \
     obsheader.h \
-    obsblock.h
+    epochrecord.h
