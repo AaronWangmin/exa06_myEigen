@@ -21,6 +21,21 @@ EpochRecord& EpochRecord::operator =(const EpochRecord &rhs)
     return *this;
 }
 
+bool EpochRecord::getPrnContinue() const
+{
+    return prnContinue;
+}
+
+void EpochRecord::setPrnContinue(bool b)
+{
+    prnContinue = b;
+}
+
+int EpochRecord::getCountSat() const
+{
+    return countSat;
+}
+
 /**
  * @brief EpochRecord::parseHeader
  * @param strLine
@@ -28,7 +43,7 @@ EpochRecord& EpochRecord::operator =(const EpochRecord &rhs)
  */
 int EpochRecord::parseHeader(const string &strLine)
 {
-    if(0 == prnContinue){
+    if(0 == prnContinue){       // read the first line of the epoch record header.
         gtime_t gtime;
         str2time(strLine,0,26,gtime);
         epoch               = gtime.time + gtime.sec;         // ! posible erro!
@@ -48,7 +63,7 @@ int EpochRecord::parseHeader(const string &strLine)
         return 0;
     }
 
-    if(1 == prnContinue){
+    if(1 == prnContinue){       // read the second line of the epoch record header.
         vector<string> addPrn;
         extractPrn(addPrn,strLine);
         prnList.insert(prnList.end(),addPrn.begin(),addPrn.end());

@@ -15,6 +15,11 @@ public:
     EpochRecord(const EpochRecord &rhs);
     EpochRecord& operator=(const EpochRecord &rhs);
 
+    bool getPrnContinue() const;
+    void setPrnContinue(bool );
+    int getCountSat() const;
+
+
     int parseHeader(const string &strLine);
 
 private:

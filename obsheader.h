@@ -15,6 +15,8 @@ public:
     ObsHeader(const ObsHeader &rhs);
     ObsHeader& operator=(const ObsHeader &rhs);
 
+    int getCountObsTypes() const;
+
     int parseObsHeader(const string &strLine);
 
 //    void setTagObsTypes(int tag);

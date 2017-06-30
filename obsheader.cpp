@@ -18,6 +18,11 @@ ObsHeader& ObsHeader::operator =(const ObsHeader &rhs)
     return *this;                               // ? is ok ?
 }
 
+int ObsHeader::getCountObsTypes() const
+{
+    return countObsTypes;
+}
+
 /**
  * @brief ObsHeader::parseObsHeader
  * @param strTemp
