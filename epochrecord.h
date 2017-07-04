@@ -15,21 +15,23 @@ public:
     EpochRecord(const EpochRecord &rhs);
     EpochRecord& operator=(const EpochRecord &rhs);
 
-    bool getPrnContinue() const;
-    void setPrnContinue(bool );
+    int getCountPrnLines() const;
+//    void setPrnContinue(bool );
     int getCountSat() const;
+    const vector<string>& getPrnList() const;
 
-
-    int parseHeader(const string &strLine);
+    void parseHeader(const string &strLine);
+    void parseBody(const vector<string> &strLine,int countLineOneSat);
 
 private:
     double                  epoch;
     int                     flagEpoch;
     int                     countSat;
     vector<string>          prnList;
-    bool                    prnContinue;        // Is prn continue line ?
+    bool                    firstLine;            // Is the first line (prn)?
+    int                     countPrnLines;        // the count of  prn lines
     double                  clockOffsetRev;
-    vector<epochRecord_t>   epochRecord;
+    vector<satObsValue_t>   satObsValueList;
 
     void assigment(const EpochRecord &rhs);
     void extractPrn(vector<string> &prnList,const string &strLine);

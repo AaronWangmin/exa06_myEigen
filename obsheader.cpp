@@ -1,7 +1,7 @@
 #include "obsheader.h"
 ObsHeader::ObsHeader()
     :countObsTypes(0),
-     tagObsTypes(0),
+     firstLine(1),
      leapSeconds(0)         // ? vector<string> obsTypes?
 {
 
@@ -18,9 +18,28 @@ ObsHeader& ObsHeader::operator =(const ObsHeader &rhs)
     return *this;                               // ? is ok ?
 }
 
-int ObsHeader::getCountObsTypes() const
+int ObsHeader::calculateLinesObsTypes() const
 {
-    return countObsTypes;
+
+    if                       (9 >= countObsTypes)   return 1;
+
+    if(9 <  countObsTypes && 18 >= countObsTypes)   return 2;
+
+    if(18 <  countObsTypes){
+        cout << " the count of observation types more than 19! " << endl;
+    }
+}
+
+int ObsHeader::calculateLinesObsValue() const
+{
+
+    if(5 >= countObsTypes)                          return 1;
+
+    if(5 <  countObsTypes && 10 >= countObsTypes)   return 2;
+
+    if(10 <  countObsTypes){
+        cout << " the count of observation types more than 10! " << endl;
+    }
 }
 
 /**
@@ -34,13 +53,10 @@ int ObsHeader::parseObsHeader(const string &strLine)     // ? needed initializat
 
     if(string::npos != lable.find("# / TYPES OF OBSERV")){
         countObsTypes = static_cast<int>(extractDouble(strLine,0,6));
-        if(9 >= countObsTypes){
-           extractObsTypes(obsTypes,strLine);
-        }
-        //?  below two if-sentnce can be replaced by tha lable = ""
-        if(9 < countObsTypes && countObsTypes <= 18) {
-            tagObsTypes = 1;
-        }
+
+        extractObsTypes(obsTypes,strLine);
+        firstLine = 0;
+
         if(18 < countObsTypes){
             cout << "the count of observation types is bigger than 18!" << endl;
         }
@@ -48,14 +64,11 @@ int ObsHeader::parseObsHeader(const string &strLine)     // ? needed initializat
         return 0;
     }
 
-    if(1 == tagObsTypes){                    // countObsTypes > 9, read continue line.
+    // read the continued line of "# / TYPES OF OBSERV"
+    if(string::npos != lable.find("                 ") && 0 == firstLine){
         vector<string> obsTypesLine2;
         extractObsTypes(obsTypesLine2,strLine);
         obsTypes.insert(obsTypes.end(),obsTypesLine2.begin(),obsTypesLine2.end());
-
-        tagObsTypes = 0;
-
-        return 0;
     }
 
         // added other lalbes...
@@ -65,9 +78,7 @@ int ObsHeader::parseObsHeader(const string &strLine)     // ? needed initializat
         return 0;
     }
 
-
     if(string::npos != lable.find("END OF HEADER")) return -1;
-
 
     return 0;
 }
@@ -77,6 +88,7 @@ void ObsHeader::assigment(const ObsHeader &rhs)
 {
     this->countObsTypes = rhs.countObsTypes;
     this->obsTypes      = rhs.obsTypes;
+    this->firstLine     = rhs.firstLine;
     this->leapSeconds   = rhs.leapSeconds;
 }
 

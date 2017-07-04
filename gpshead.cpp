@@ -126,24 +126,23 @@ void obsTypes_t::assigment(const obsTypes_t &rhs)
     this->obsDesclist   = rhs.obsDesclist;
 }
 
-epochRecord_t::epochRecord_t()
-    :prn(0)
+satObsValue_t::satObsValue_t()
 {
 
 }
 
-epochRecord_t::epochRecord_t(const epochRecord_t &rhs)
+satObsValue_t::satObsValue_t(const satObsValue_t &rhs)
 {
     assigment(rhs);
 }
 
-epochRecord_t& epochRecord_t::operator =(const epochRecord_t &rhs)
+satObsValue_t& satObsValue_t::operator =(const satObsValue_t &rhs)
 {
     assigment(rhs);
     return *this;
 }
 
-void epochRecord_t::assigment(const epochRecord_t &rhs)
+void satObsValue_t::assigment(const satObsValue_t &rhs)
 {
     this->prn      = rhs.prn;
     this->obsValue = rhs.obsValue;
@@ -160,10 +159,13 @@ void epochRecord_t::assigment(const epochRecord_t &rhs)
  */
 extern double extractDouble(const string &str,int pos, int npos)
 {
+    if (pos < 0||(int)str.length() < pos) return -1;
+
     string temp = str.substr(pos,npos);
     if(string::npos != temp.find('E')){
        temp.replace(15,1,"E");
     }
+
     return std::stod(temp);
 }
 
@@ -215,6 +217,17 @@ extern void strSplit(vector<string>& strlist,const string& str,char c)
         if(0 != result.size()){
             strlist.push_back(result);
         }
+    }
+}
+
+extern void extractDoubleList(vector<double>& doubleList,const string& str,int pos, int npos)
+{
+    string::const_iterator it;
+    for(it = str.begin(); it != str.end(); it += npos){
+        double temp = extractDouble(str,pos,npos);
+        doubleList.push_back(temp);
+
+        pos += npos;
     }
 }
 

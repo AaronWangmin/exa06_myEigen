@@ -15,16 +15,14 @@ public:
     ObsHeader(const ObsHeader &rhs);
     ObsHeader& operator=(const ObsHeader &rhs);
 
-    int getCountObsTypes() const;
-
     int parseObsHeader(const string &strLine);
 
-//    void setTagObsTypes(int tag);
-//    void setObsTypes(const vector<string> &newObsTypes);
+    int calculateLinesObsTypes() const;
+    int calculateLinesObsValue() const;         // calculate lines of observation value in epochRecord.
 
 private:
     int countObsTypes;
-    int tagObsTypes;        // countObsTypes <= 9, tagObsTypes = 0;
+    bool firstLine;        // countObsTypes <= 9, tagObsTypes = 0;
                             // countObsTypes > 9,  tagObsTypes = 1, need to read contiune line
     vector<string> obsTypes;
     double leapSeconds;

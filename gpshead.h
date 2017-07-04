@@ -117,21 +117,22 @@ private:
 
 };
 
-struct epochRecord_t{
-    int prn;
+struct satObsValue_t{               //
+    string prn;
     vector<double> obsValue;        // ? should be update by key-value(L1:21170728.140)
 
-    epochRecord_t();
-    epochRecord_t(const epochRecord_t &rhs);
-    epochRecord_t& operator=(const epochRecord_t &rhs);
+    satObsValue_t();
+    satObsValue_t(const satObsValue_t &rhs);
+    satObsValue_t& operator=(const satObsValue_t &rhs);
 
 private:
-    void assigment(const epochRecord_t &rhs);
+    void assigment(const satObsValue_t &rhs);
 };
 
 
 extern double extractDouble(const string& str,int pos,int npos);        // ? extern
 extern void strSplit(vector<string>& strlist,const string& str,char c);
+extern void extractDoubleList(vector<double>& doubleList,const string& str,int pos, int npos);
 extern int str2time(const string& str,int pos,int npos,gtime_t& t);
 extern double timeDiff(gtime_t t1, gtime_t t2);
 extern gtime_t epoch2time(const double *ep);

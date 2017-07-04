@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 //    AdjustParameter adj(coefB,weight1);
 //    adj.printResult();
 
-//    Broadcast brdt("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
+    Broadcast brdt("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
 
 //    PositionSat posat;
 ////    posat.calculateFromBroadcast(1,1466467200,brdt);
@@ -65,6 +65,8 @@ int main(int argc, char *argv[])
 //        posat.calculateFromBroadcast(2,span.back(),brdt);
 //        cout << posat.getPositionSat() << endl << endl;
 //    }
+
+
 
     ObsDataFile obsfile;
     obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
