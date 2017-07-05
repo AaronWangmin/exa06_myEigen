@@ -15,19 +15,19 @@ public:
     EpochRecord(const EpochRecord &rhs);
     EpochRecord& operator=(const EpochRecord &rhs);
 
-    int getCountPrnLines() const;
-//    void setPrnContinue(bool );
-    int getCountSat() const;
-    const vector<string>& getPrnList() const;
+    double  getEpoch() const;
+    int     getCountPrnLines() const;
+    int     getCountSat() const;
+    const   vector<string>& getPrnList() const;
 
-    void parseHeader(const string &strLine);
-    void parseBody(const vector<string> &strLine,int countLineOneSat);
+    void    parseHeader(const string &strLine);
+    void    parseBody(const vector<string> &strLine,int countLineOneSat);
 
 private:
-    double                  epoch;
+    double                  epoch;                // ? The member should be a struct?
     int                     flagEpoch;
     int                     countSat;
-    vector<string>          prnList;
+    vector<string>          prnList;              // edit! seperat G and num(G 02).
     bool                    firstLine;            // Is the first line (prn)?
     int                     countPrnLines;        // the count of  prn lines
     double                  clockOffsetRev;

@@ -71,7 +71,5 @@ int main(int argc, char *argv[])
     ObsDataFile obsfile;
     obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
 
-
-
     return a.exec();
 }

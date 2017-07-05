@@ -1,8 +1,20 @@
 #include "positionsat.h"
 
 PositionSat::PositionSat()
+    :delta_ts(0)
 {
 
+}
+
+PositionSat::PositionSat(const PositionSat &rhs)
+{
+    assignment(rhs);
+}
+
+PositionSat& PositionSat::operator = (const PositionSat &rhs)
+{
+    assignment(rhs);
+    return *this;
 }
 
 
@@ -12,16 +24,16 @@ const Vector3d& PositionSat::getPositionSat() const
     return positionSat;
 }
 
-void PositionSat::calculateFromBroadcast(int prn,double givenTime, const Broadcast &brdc)
+void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast &brdc)
 {
-    eph_t eph = searchClosestEph(prn,givenTime,brdc);
+    eph_t eph = searchClosestEph(prn,timeSat,brdc);
 
     // gps clock diff
-    double delta_ts = eph.af0 + eph.af1 *(givenTime - eph.toe)
-                              + pow(eph.af2 *(givenTime - eph.toe),2);
+    double delta_ts = eph.af0 + eph.af1 *(timeSat - eph.toe)
+                              + pow(eph.af2 *(timeSat - eph.toe),2);
 
     // 计算卫星发射时刻与参考时刻的差
-    double tk =  givenTime - delta_ts -eph.toe;
+    double tk =  timeSat - delta_ts -eph.toe;
     if     (tk >  302400)     tk = 302400 - 604800;
     else if(tk < -302400)     tk = 302400 + 604800;
     else                      tk = tk;
@@ -78,16 +90,16 @@ void PositionSat::calculateFromBroadcast(int prn,double givenTime, const Broadca
 /**
  * @brief PositionSat::searchClosestEph
  * @param eph           O       eph_t
- * @param givenTime     I       double
+ * @param timeSat       I       double
  * @param brdc          I       Broadcast
  * @return 0:ok, -1:false
  */
-eph_t PositionSat::searchClosestEph(int prn,double givenTime, const Broadcast &brdc) const
+eph_t PositionSat::searchClosestEph(double timeSat,int prn,const Broadcast &brdc) const
 {
     const vector<eph_t> &ephRecord = brdc.getEphRecord();
     for(int i = 0; i < ephRecord.size(); i++){
         eph_t eph(ephRecord.at(i));        
-        if(prn == eph.prn && abs(givenTime - eph.toc) <= 3600)
+        if(prn == eph.prn && abs(timeSat - eph.toc) <= 3600)
         {
             return ephRecord.at(i);
         }
@@ -96,4 +108,9 @@ eph_t PositionSat::searchClosestEph(int prn,double givenTime, const Broadcast &b
     cout << " no eph !" << endl;        // ? return a tag of not found.
 }
 
+void PositionSat::assignment(const PositionSat &rhs)
+{
+    this->positionSat    = rhs.positionSat;
+    this->delta_ts       = rhs.delta_ts;
+}
 

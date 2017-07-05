@@ -1,6 +1,13 @@
 #include "coefficientb.h"
 #include <iostream>
 
+CoefficientB::CoefficientB()
+    :n(0),
+     t(0)
+{
+
+}
+
 CoefficientB::CoefficientB(const MatrixXd &coefB, const VectorXd &coefl)
     :n(coefB.rows()),
      t(coefB.cols()),
@@ -9,6 +16,16 @@ CoefficientB::CoefficientB(const MatrixXd &coefB, const VectorXd &coefl)
      X0(MatrixXd::Zero(coefB.cols(),1))
 {
 
+}
+
+CoefficientB::CoefficientB(const CoefficientB &rhs)
+{
+    assignment(rhs);
+}
+
+CoefficientB& CoefficientB::operator =(const CoefficientB &rhs){
+    assignment(rhs);
+    return *this;
 }
 
 const MatrixXd& CoefficientB::getB() const
@@ -32,4 +49,13 @@ void CoefficientB::printBL() const
     std::cout << B << std::endl;
     std::cout << "   Error equation: l   " << std::endl;
     std::cout << l << std::endl;
+}
+
+void CoefficientB::assignment(const CoefficientB &rhs)
+{
+    this->n     = rhs.n;
+    this->t     = rhs.t;
+    this->B     = rhs.B;
+    this->l     = rhs.l;
+    this->X0    = rhs.X0;
 }

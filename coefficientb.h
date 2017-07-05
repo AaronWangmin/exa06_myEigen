@@ -7,7 +7,11 @@ using namespace Eigen;
 class CoefficientB
 {
 public:
-    CoefficientB(const MatrixXd &coefB,const VectorXd &coefl);
+    CoefficientB();
+    CoefficientB(const MatrixXd &coefB,const VectorXd &coefl);    
+    CoefficientB(const CoefficientB &rhs);
+    CoefficientB& operator= (const CoefficientB &rhs);
+
 
     const MatrixXd& getB() const;      // get coefficient Matrix B
     const VectorXd& getl() const;      // get const Vector l
@@ -20,6 +24,8 @@ private:
     MatrixXd B;
     VectorXd l;
     VectorXd X0;
+
+    void assignment(const CoefficientB &rhs);
 };
 
 #endif // COEFFICIENTB_H

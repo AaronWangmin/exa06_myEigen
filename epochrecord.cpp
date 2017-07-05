@@ -22,6 +22,11 @@ EpochRecord& EpochRecord::operator =(const EpochRecord &rhs)
     return *this;
 }
 
+double EpochRecord::getEpoch() const
+{
+    return epoch;
+}
+
 int EpochRecord::getCountPrnLines() const
 {
     return countPrnLines;

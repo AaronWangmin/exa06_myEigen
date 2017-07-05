@@ -40,6 +40,5 @@ void ObsDataFile::fromObsFile(const string &obsFile)
 
         fs.close();
     }
-
 }
 
