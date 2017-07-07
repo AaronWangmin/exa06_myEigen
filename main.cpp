@@ -9,6 +9,7 @@ using namespace std;
 #include "broadcast.h"
 #include "positionsat.h"
 #include "obsdatafile.h"
+#include "ssp.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,25 @@ int main(int argc, char *argv[])
 //    cout << t1 << endl<< endl;
 //    cout << t1.transpose() << endl << endl;
 //    cout << t1.adjoint()<< endl;
+
+//    Vector3d v1(1,2,3), v2(4,6,8);
+//    Vector3d temp = v2 - v1;
+//    double d = sqrt((temp.array().square()).matrix().sum());
+//    RowVector4d b;
+//    b << (temp/d).transpose(),1;
+//    cout << v1 << endl;
+//    cout << v2 << endl;
+//    cout << temp << endl;
+//    cout << d << endl;
+//    cout << b << endl;
+
+    Vector4d v3,v4;
+    v3 << 1,2,3,4;
+    cout << v3 << endl;
+    v4(v3,5,6,7,8);
+    cout << v4 << endl;
+
+
 
 //    // test: WeightObservation...
 //    WeightObservation w1(10);
@@ -50,7 +70,7 @@ int main(int argc, char *argv[])
 //    AdjustParameter adj(coefB,weight1);
 //    adj.printResult();
 
-    Broadcast brdt("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
+    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
 
 //    PositionSat posat;
 ////    posat.calculateFromBroadcast(1,1466467200,brdt);
@@ -66,10 +86,19 @@ int main(int argc, char *argv[])
 //        cout << posat.getPositionSat() << endl << endl;
 //    }
 
+//    double d2 = 0.0000000000000000000000000000000000000000000000000000000001;
+//    string d1 = "0.190200000000e+04";
+//    cout << std::stod(d1) << endl;
+//    cout << d2 << endl;
 
 
     ObsDataFile obsfile;
     obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
+
+    Vector3d posRec0(0,0,0);
+    SSP ssp(obsfile.getObsDataRecord().at(1),brdc,posRec0);
+
+
 
     return a.exec();
 }

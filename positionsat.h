@@ -12,9 +12,12 @@ public:
     PositionSat(const PositionSat &rhs);
     PositionSat& operator= (const PositionSat &rhs);
 
+    const   Vector3d& getPositionSat() const;
+    double  getDeltaTs() const;
+
     void calculateFromBroadcast(double timeSat,int prn,const Broadcast& brdc);
 
-    const Vector3d& getPositionSat() const;
+
 
 private:
 

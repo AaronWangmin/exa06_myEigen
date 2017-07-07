@@ -162,7 +162,7 @@ extern double extractDouble(const string &str,int pos, int npos)
     if (pos < 0||(int)str.length() < pos) return -1;
 
     string temp = str.substr(pos,npos);
-    if(string::npos != temp.find('E')){
+    if(string::npos != temp.find('D')){
        temp.replace(15,1,"E");
     }
 

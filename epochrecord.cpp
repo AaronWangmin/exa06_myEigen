@@ -27,11 +27,6 @@ double EpochRecord::getEpoch() const
     return epoch;
 }
 
-int EpochRecord::getCountPrnLines() const
-{
-    return countPrnLines;
-}
-
 int EpochRecord::getCountSat() const
 {
     return countSat;
@@ -41,6 +36,17 @@ const vector<string>& EpochRecord::getPrnList() const
 {
     return prnList;
 }
+
+int EpochRecord::getCountPrnLines() const
+{
+    return countPrnLines;
+}
+
+const vector<satObsValue_t>& EpochRecord::getSatObsValueList() const
+{
+    return satObsValueList;
+}
+
 
 /**
  * @brief EpochRecord::parseHeader

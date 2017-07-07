@@ -24,12 +24,17 @@ const Vector3d& PositionSat::getPositionSat() const
     return positionSat;
 }
 
+double PositionSat::getDeltaTs() const
+{
+    return delta_ts;
+}
+
 void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast &brdc)
 {
-    eph_t eph = searchClosestEph(prn,timeSat,brdc);
+    eph_t eph = searchClosestEph(timeSat,prn,brdc);
 
     // gps clock diff
-    double delta_ts = eph.af0 + eph.af1 *(timeSat - eph.toe)
+    delta_ts = eph.af0 + eph.af1 *(timeSat - eph.toe)
                               + pow(eph.af2 *(timeSat - eph.toe),2);
 
     // 计算卫星发射时刻与参考时刻的差

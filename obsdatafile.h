@@ -13,6 +13,8 @@ class ObsDataFile
 public:
     ObsDataFile();
 
+    const vector<EpochRecord>& getObsDataRecord() const;
+
     void fromObsFile(const string& obsFile);
 
 private:

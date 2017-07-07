@@ -15,10 +15,11 @@ public:
     EpochRecord(const EpochRecord &rhs);
     EpochRecord& operator=(const EpochRecord &rhs);
 
-    double  getEpoch() const;
-    int     getCountPrnLines() const;
-    int     getCountSat() const;
-    const   vector<string>& getPrnList() const;
+    double                          getEpoch() const;
+    int                             getCountSat() const;
+    const vector<string>&           getPrnList() const;
+    int                             getCountPrnLines() const;
+    const vector<satObsValue_t>&    getSatObsValueList() const;
 
     void    parseHeader(const string &strLine);
     void    parseBody(const vector<string> &strLine,int countLineOneSat);

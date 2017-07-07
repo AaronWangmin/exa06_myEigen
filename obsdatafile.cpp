@@ -7,6 +7,11 @@ ObsDataFile::ObsDataFile()
 
 }
 
+const vector<EpochRecord>& ObsDataFile::getObsDataRecord() const
+{
+    return obsDataRecord;
+}
+
 void ObsDataFile::fromObsFile(const string &obsFile)
 {
     fstream fs(obsFile);

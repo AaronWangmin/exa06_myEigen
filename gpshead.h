@@ -6,6 +6,7 @@ using namespace Eigen;
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <ctime>
 #include <math.h>

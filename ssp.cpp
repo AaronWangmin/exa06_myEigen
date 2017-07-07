@@ -5,25 +5,50 @@ SSP::SSP()
 
 }
 
-SSP::SSP(const EpochRecord &epochRecord, const Broadcast &brdc)
+SSP::SSP(const EpochRecord &epochRecord, const Broadcast &brdc,Vector3d posRec0)
 {
-
+    oneBL(epochRecord,brdc,posRec0);
 }
 
 void SSP::oneBL(const EpochRecord &epochRecord,const Broadcast &brdc, Vector3d posRec0)
 {
     double tr = epochRecord.getEpoch();     // the moment of receiver observation
-    double sp = 0.075;                      // the spended time, = 22500/c
-    double ts = tr - sp;
+    double sp = 0.075;                      // the time of light spend, = 22500/c
 
+    const vector<satObsValue_t> &satObsList =  epochRecord.getSatObsValueList();
+//    Matrix<double,epochRecord.getCountSat(),4> B;
+//    Matrix<double,epochRecord.getCountSat(),1> l;
 
-    posRec0 << 0,0,0;
+    vector<satObsValue_t>::const_iterator it;
+    for(it = satObsList.begin();it != satObsList.end();it++){
+        satObsValue_t satObsValue;                              // a satellite observation process.
+        satObsValue = *it;
 
+        RowVector4d b;
+        double l;
+        while(1){
+            double ts = tr - sp;
 
-    PositionSat posat;
-//    posat.calculateFromBroadcast(ts,
+            int prn = std::stoi((satObsValue.prn).substr(1,2));
 
+            PositionSat posat;
+            posat.calculateFromBroadcast(ts,prn,brdc);
+            double delta_ts = posat.getDeltaTs();
 
+            Vector3d temp = posRec0 - posat.getPositionSat();
+            double d = sqrt((temp.array().square()).matrix().sum());
+            double sp2 = d/C;
+            if(abs(sp2-sp) <= 1E-11){
+                b << (temp/d).transpose(),1;
+
+                double pd = satObsValue.obsValue.at(0);     // pd value process.
+                l = pd - d + delta_ts * C;
+
+                break;
+            }
+            sp = sp2;
+        }
+    }
 }
 
 //const eph_t& SSP::usableEpoch(double timeRec,const string prn, const Broadcast &brdc)
