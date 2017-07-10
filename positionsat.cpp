@@ -34,10 +34,12 @@ void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast 
     eph_t eph = searchClosestEph(timeSat,prn,brdc);
 
     // gps clock diff
-    delta_ts = eph.af0 + eph.af1 *(timeSat - eph.toe)
-                              + pow(eph.af2 *(timeSat - eph.toe),2);
+    delta_ts = eph.af0 +
+               eph.af1 *(timeSat - eph.toe) +
+               eph.af2 *pow((timeSat - eph.toe),2);
 
     // 计算卫星发射时刻与参考时刻的差
+//    double tk =  timeSat - eph.toe;
     double tk =  timeSat - delta_ts -eph.toe;
     if     (tk >  302400)     tk = 302400 - 604800;
     else if(tk < -302400)     tk = 302400 + 604800;

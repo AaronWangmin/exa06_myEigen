@@ -20,6 +20,7 @@ public:
     AdjustParameter(const CoefficientB &coefficient, const WeightObservation &weight);
 
     const VectorXd& getX() const;              // get the values of :X, D_XX
+    const VectorXd& getx() const;
 
     void printResult() const;
 

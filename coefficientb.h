@@ -8,7 +8,9 @@ class CoefficientB
 {
 public:
     CoefficientB();
-    CoefficientB(const MatrixXd &coefB,const VectorXd &coefl);    
+    CoefficientB(const MatrixXd &coefB,const VectorXd &coefl);
+    CoefficientB(const MatrixXd &coefB,const VectorXd &coefl,const VectorXd &inital_X0);
+
     CoefficientB(const CoefficientB &rhs);
     CoefficientB& operator= (const CoefficientB &rhs);
 

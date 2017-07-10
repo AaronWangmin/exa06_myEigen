@@ -1,5 +1,8 @@
 #include <QCoreApplication>
 
+#include "Eigen/Dense"
+using namespace Eigen;
+
 #include <iostream>
 using namespace std;
 
@@ -15,7 +18,10 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-//    // test: Eigen...
+/**
+ * test: Eigen...
+ */
+
 //    MatrixXd t1;
 //    t1.setRandom(4,4);
 //    cout << t1 << endl<< endl;
@@ -33,15 +39,34 @@ int main(int argc, char *argv[])
 //    cout << d << endl;
 //    cout << b << endl;
 
-    Vector4d v3,v4;
-    v3 << 1,2,3,4;
-    cout << v3 << endl;
-    v4(v3,5,6,7,8);
-    cout << v4 << endl;
+//    int i = 4;
+//    MatrixXd m1(i,i);
+//    RowVector4d r1;
+//    r1 << 1,2,3,4;
+//    m1.row(0) = r1;
+//    cout << r1 << endl;
+//    cout << m1 << endl;
+
+//    RowVector3f n;
+//    n << 100,100,100;
+//    cout << n << endl;
+//    MatrixXf m(3,3);
+//        m<< 1,2,3,
+//            4,5,6,
+//            7,8,9;
+//        cout<<"Here is the matrix m:"<<endl<<m<<endl;
+//        cout<<"2nd Row:"<<m.row(1)<<endl;
+//        m.col(2) += 3*m.col(0);
+//        m.row(2) = n;
+//        m.row(2) += n;
+//        cout<<"After adding 3 times the first column into third column,the matrix m is:\n";
+//        cout<<m<<endl;
 
 
+/**
+ *   test: WeightObservation...
+ */
 
-//    // test: WeightObservation...
 //    WeightObservation w1(10);
 //    cout << w1.getWeight() << endl;
 
@@ -70,14 +95,28 @@ int main(int argc, char *argv[])
 //    AdjustParameter adj(coefB,weight1);
 //    adj.printResult();
 
+/**
+ *   test: date to GPS TIME
+ */
+      string temp = " 1 14 12  9  0  0  0.0-0";
+      gtime_t gtime;
+      str2time(temp,3,19,gtime);
+      double t = gtime.time + gtime.sec;
+      cout << t << endl;
+
+/**
+ *   test: position sat
+ */
+
+//    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc3430.14n");
     Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
 
 //    PositionSat posat;
-////    posat.calculateFromBroadcast(1,1466467200,brdt);
-////    cout << endl << posat.getPositionSat() << endl;
+//    posat.calculateFromBroadcast(1418083200,4,brdc);
+//    cout << endl << posat.getPositionSat() << endl;
 
-////    vector<string> v;
-////    strSplit(v,"  aa bb    ccc     ddd a",' ');
+//    vector<string> v;
+//    strSplit(v,"  aa bb    ccc     ddd a",' ');
 
 //    vector<double> span;
 //    for(int i = 0; i < 12 ; i++){
@@ -95,8 +134,8 @@ int main(int argc, char *argv[])
     ObsDataFile obsfile;
     obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
 
-    Vector3d posRec0(0,0,0);
-    SSP ssp(obsfile.getObsDataRecord().at(1),brdc,posRec0);
+    Vector4d posRec0(-1343047.1012,5322999.4152,3236981.6709,0);
+    SSP ssp(posRec0,obsfile.getObsDataRecord().at(1),brdc);
 
 
 

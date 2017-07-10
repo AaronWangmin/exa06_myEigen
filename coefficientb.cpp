@@ -12,11 +12,21 @@ CoefficientB::CoefficientB(const MatrixXd &coefB, const VectorXd &coefl)
     :n(coefB.rows()),
      t(coefB.cols()),
      B(coefB),
-     l(coefl),
-     X0(MatrixXd::Zero(coefB.cols(),1))
+     l(coefl)
 {
 
 }
+
+CoefficientB::CoefficientB(const MatrixXd &coefB, const VectorXd &coefl, const VectorXd &inital_X0)
+    :n(coefB.rows()),
+     t(coefB.cols()),
+     B(coefB),
+     l(coefl)
+{
+    X0 = inital_X0;
+}
+
+
 
 CoefficientB::CoefficientB(const CoefficientB &rhs)
 {

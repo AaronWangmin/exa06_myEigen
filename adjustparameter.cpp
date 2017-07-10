@@ -36,6 +36,10 @@ const VectorXd& AdjustParameter::getX() const
 {
     return X;
 }
+const VectorXd& AdjustParameter::getx() const
+{
+    return x;
+}
 
 void AdjustParameter::printResult() const
 {
