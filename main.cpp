@@ -16,7 +16,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+   QCoreApplication a(argc, argv);
 
 /**
  * test: Eigen...
@@ -27,6 +27,24 @@ int main(int argc, char *argv[])
 //    cout << t1 << endl<< endl;
 //    cout << t1.transpose() << endl << endl;
 //    cout << t1.adjoint()<< endl;
+//    cout << 7*pow(10,-5) << endl;
+//    cout << 7E-5 << endl;
+
+//    Vector4d posClockRec0(1,2,3,4);
+//    Vector3d posSat(5,10,14);
+//    Vector3d temp = posClockRec0.head(3) - posSat;
+//    double d = sqrt((temp.array().square()).matrix().sum());
+//    RowVector4d b;
+//    b << (temp/d).transpose(),1;
+//    cout << endl << d << endl;
+//    cout << endl << posClockRec0 << endl;
+//    cout << endl << posSat << endl;
+//    cout << endl << temp << endl;
+//    cout << endl << b << endl;
+
+//    cout << endl;
+
+
 
 //    Vector3d v1(1,2,3), v2(4,6,8);
 //    Vector3d temp = v2 - v1;
@@ -98,11 +116,11 @@ int main(int argc, char *argv[])
 /**
  *   test: date to GPS TIME
  */
-      string temp = " 1 14 12  9  0  0  0.0-0";
-      gtime_t gtime;
-      str2time(temp,3,19,gtime);
-      double t = gtime.time + gtime.sec;
-      cout << t << endl;
+//      string temp = " 1 14 12  9  0  0  0.0-0";
+//      gtime_t gtime;
+//      str2time(temp,3,19,gtime);
+//      double t = gtime.time + gtime.sec;
+//      cout << t << endl;
 
 /**
  *   test: position sat
@@ -111,9 +129,9 @@ int main(int argc, char *argv[])
     Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc3430.14n");
 //    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
 
-    PositionSat posat;
-    posat.calculateFromBroadcast(1418083200,4,brdc);
-    cout << endl << posat.getPositionSat() << endl;
+//    PositionSat posat;
+//    posat.calculateFromBroadcast(1418083200,4,brdc);
+//    cout << endl << posat.getPositionSat() << endl;
 
 //    vector<string> v;
 //    strSplit(v,"  aa bb    ccc     ddd a",' ');
@@ -132,12 +150,11 @@ int main(int argc, char *argv[])
 
 
     ObsDataFile obsfile;
-    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
+    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/lhaz3430.14o");
 
-    Vector4d posRec0(-1343047.1012,5322999.4152,3236981.6709,0);
+    Vector4d posRec0(0,0,0,0);
     SSP ssp(posRec0,obsfile.getObsDataRecord().at(1),brdc);
 
-
-
-    return a.exec();
+   return a.exec();
 }
+

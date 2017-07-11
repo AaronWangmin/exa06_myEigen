@@ -22,7 +22,7 @@ public:
 private:
 
     Vector3d positionSat;
-    double delta_ts;
+    double delta_ts;            // 卫星钟差
 
     eph_t searchClosestEph(double timeSat,int prn,const Broadcast& brdc) const;  // ? return eph_t&(local variable)
     // ?  int searchClosestEph(eph_t& eph,double timeSat, const Broadcast& brdc) const; // 0:ok, -1:false

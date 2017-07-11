@@ -29,6 +29,15 @@ double PositionSat::getDeltaTs() const
     return delta_ts;
 }
 
+/**
+ * @brief PositionSat::calculateFromBroadcast
+ *
+ * 卫星位置计算时，toe 以 GPS秒为参考进行计算，
+ *
+ * @param timeSat
+ * @param prn
+ * @param brdc
+ */
 void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast &brdc)
 {
     eph_t eph = searchClosestEph(timeSat,prn,brdc);
