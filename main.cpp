@@ -108,12 +108,12 @@ int main(int argc, char *argv[])
  *   test: position sat
  */
 
-//    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc3430.14n");
-    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
+    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc3430.14n");
+//    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
 
-//    PositionSat posat;
-//    posat.calculateFromBroadcast(1418083200,4,brdc);
-//    cout << endl << posat.getPositionSat() << endl;
+    PositionSat posat;
+    posat.calculateFromBroadcast(1418083200,4,brdc);
+    cout << endl << posat.getPositionSat() << endl;
 
 //    vector<string> v;
 //    strSplit(v,"  aa bb    ccc     ddd a",' ');

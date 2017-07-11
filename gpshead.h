@@ -61,6 +61,7 @@ struct gtime_t{
     double sec;                 // fraction of second under 1s
 
     gtime_t();
+    gtime_t(time_t t,double s);
     gtime_t(const gtime_t &rhs);// ? needed a operator= ?
 };
 
@@ -69,11 +70,11 @@ struct eph_t{                   // GPS broadcast ephemeris type,based on rinex2.
 
     // data record
     int prn;                    // first line of nav records
-    double toc;
+    double toc;                 // from time_t(0), "16  6 21  0  0  0.0"
     double af0,af1,af2;
     double iode,Crs,Deln,M0;    // broadcast orbit-1
     double Cuc,e,Cus,sqrtA;     // broadcast orbit-2
-    double toe;                 // broadcast orbit-3
+    double toe;                 // broadcast orbit-3,  seconds of gps week(toe)
     double Cic,OMG0,Cis;
     double i0,Crc,omg,OMGd;     // broadcast orbit-4
     double iDOT,code,week,flag; // broadcast orbit-5,  toes(in rtklib.h) ?
@@ -138,6 +139,7 @@ extern int str2time(const string& str,int pos,int npos,gtime_t& t);
 extern double timeDiff(gtime_t t1, gtime_t t2);
 extern gtime_t epoch2time(const double *ep);
 extern gtime_t gpst2time(int week, double sec);
+extern double  time2gpst(gtime_t t, int &week);
 
 
 

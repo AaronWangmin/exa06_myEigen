@@ -7,10 +7,18 @@ gtime_t::gtime_t()
 
 }
 
+gtime_t::gtime_t(time_t t, double s)
+    :time(t),
+     sec(s)
+{
+
+}
+
+
 gtime_t::gtime_t(const gtime_t &rhs)
 {
     this->time   = rhs.time;
-    this->sec = rhs.sec;
+    this->sec    = rhs.sec;
 }
 
 eph_t::eph_t()
@@ -271,5 +279,14 @@ extern gtime_t gpst2time(int week, double sec)
     t.time += 86400*7*week + (int)sec;
     t.sec = sec - (int)sec;
     return t;
+}
+extern double time2gpst(gtime_t t, int &week){
+    gtime_t t0=epoch2time(gpst0);
+    time_t sec=t.time-t0.time;
+    int w=(int)(sec/(86400*7));
+
+//    if (week) *week=w;
+    week=w;
+    return (double)(sec-w*86400*7)+t.sec;
 }
 

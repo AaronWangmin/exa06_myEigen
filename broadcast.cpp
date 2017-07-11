@@ -78,7 +78,7 @@ void Broadcast::parseNavData(const vector<string> &strEph, eph_t &eph)
 
         // the 4th line
         temp = strEph.at(3);
-        double sec            = extractDouble(temp,3,19);       // seconds of week. ! posible erro!
+        eph.toe               = extractDouble(temp,3,19);       // seconds of week. ! posible erro!
         eph.Cic               = extractDouble(temp,22,19);
         eph.OMG0              = extractDouble(temp,41,19);
         eph.Cis               = extractDouble(temp,60,19);
@@ -97,8 +97,8 @@ void Broadcast::parseNavData(const vector<string> &strEph, eph_t &eph)
         eph.week              = extractDouble(temp,41,19);
         eph.flag              = extractDouble(temp,60,19);
 
-        gtime_t toeTemp(gpst2time(eph.week,sec));
-        eph.toe               = toeTemp.time + toeTemp.sec;
+//        gtime_t toeTemp(gpst2time(eph.week,sec));
+//        eph.toe               = toeTemp.time + toeTemp.sec;
 
         // the 7th line
         temp = strEph.at(6);
