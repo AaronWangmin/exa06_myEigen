@@ -21,8 +21,9 @@ public:
     int                             getCountPrnLines() const;
     const vector<satObsValue_t>&    getSatObsValueList() const;
 
-    void    parseHeader(const string &strLine);
-    void    parseBody(const vector<string> &strLine,int countLineOneSat);
+//    void    parseHeader(const string &strLine);
+    void    parseHeader(const vector<string> &strBlock);
+    void    parseBody(const vector<string> &strLine,int linesObsValue);
 
 private:
     double                  epoch;                // ? The member should be a struct?
@@ -36,6 +37,9 @@ private:
 
     void assigment(const EpochRecord &rhs);
     void extractPrn(vector<string> &prnList,const string &strLine);
+
+    void parseOneSatObs(vector<double> &oneSatObs,const vector<string> &strBlock);
+    void parseOneLineObs(vector<double> &obsLine,const string &strLine);
 
 };
 

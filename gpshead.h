@@ -133,7 +133,8 @@ private:
 
 
 extern double extractDouble(const string& str,int pos,int npos);        // ? extern
-extern void strSplit(vector<string>& strlist,const string& str,char c);
+
+extern void strSplit(vector<string>& strlist,const string& str,const char c);
 extern void extractDoubleList(vector<double>& doubleList,const string& str,int pos, int npos);
 extern int str2time(const string& str,int pos,int npos,gtime_t& t);
 extern double timeDiff(gtime_t t1, gtime_t t2);

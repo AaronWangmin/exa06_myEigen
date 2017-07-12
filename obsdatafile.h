@@ -20,6 +20,7 @@ public:
 private:
     ObsHeader obsHeader;
     vector<EpochRecord> obsDataRecord;
+    int calculateLinesPrn(int countSat) const;          // the lines of epoch record header.
 };
 
 #endif // OBSDATAFILE_H

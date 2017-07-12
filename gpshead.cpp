@@ -203,28 +203,27 @@ extern int str2time(const string& str,int pos,int npos,gtime_t& t)
 *          char   c           I   char (' ')
 *                 v           O   string ("aa","bb","cc")
 *-----------------------------------------------------------------------------*/
-extern void strSplit(vector<string>& strlist,const string& str,char c)
+extern void strSplit(vector<string>& strlist,const string& str, const char c)
 {
     string::const_iterator it;
     for(it = str.begin(); it != str.end(); it++){
         string::const_iterator head,tail;
         for(head = it;head != str.end();head++){              // 查找第一个 不等于 分割符的字符。
-            if((*head) != c) break;
+            char temp = *head;
+            if( temp != c ) break;
         }
 
         string result;
         for(tail = head; tail != str.end();tail++){           // 查找第一个 等于 分割符的字符。
-            if((*tail) != c)    { result += (*tail);}
-
-            if((*tail) == c)    {
-                it = tail;
+            char temp = *tail;
+            if(temp == c){
                 break;
             }
+            it = tail;
+            result += temp;
         }
 
-        if(0 != result.size()){
-            strlist.push_back(result);
-        }
+        strlist.push_back(result);
     }
 }
 
