@@ -163,7 +163,7 @@ void satObsValue_t::assigment(const satObsValue_t &rhs)
  * @param str       I   string()
  * @param pos       I   substring position and width
  * @param npos
- * @return          O   double
+ * @return          O   double, -1:fail.
  */
 extern double extractDouble(const string &str,int pos, int npos)
 {
@@ -174,7 +174,12 @@ extern double extractDouble(const string &str,int pos, int npos)
        temp.replace(15,1,"E");
     }
 
-    return std::stod(temp);
+    stringstream sin(temp);
+    double d;
+    if(sin >> d) return d;
+    else         return -1;
+
+//    return std::stod(temp);
 }
 
 /* string to time --------------------------------------------------------------
@@ -207,19 +212,23 @@ extern void strSplit(vector<string>& strlist,const string& str, const char c)
 {
     string::const_iterator it;
     for(it = str.begin(); it != str.end(); it++){
-        string::const_iterator head,tail;
-        for(head = it;head != str.end();head++){              // 查找第一个 不等于 分割符的字符。
-            char temp = *head;
-            if( temp != c ) break;
-        }
+        string::const_iterator head;
 
-        string result;
-        for(tail = head; tail != str.end();tail++){           // 查找第一个 等于 分割符的字符。
-            char temp = *tail;
-            if(temp == c){
+        for( ; it != str.end();it++){              // 查找第一个 不等于 分割符的字符。
+            char temp = *it;
+            if( temp != c ){
+                head = it;
                 break;
             }
-            it = tail;
+        }
+
+        if(it == str.end()) break;
+
+        string result;
+        for( ; it != str.end();it++){           // 查找第一个 等于 分割符的字符。
+            char temp = *it;
+            if(temp == c)   break;
+
             result += temp;
         }
 

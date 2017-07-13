@@ -4,8 +4,6 @@ EpochRecord::EpochRecord()
     :epoch(0),
      flagEpoch(0),
      countSat(0),
-     firstLine(1),
-     countPrnLines(1),
      clockOffsetRev(0)
 {
 
@@ -37,10 +35,10 @@ const vector<string>& EpochRecord::getPrnList() const
     return prnList;
 }
 
-int EpochRecord::getCountPrnLines() const
-{
-    return countPrnLines;
-}
+//int EpochRecord::getCountPrnLines() const
+//{
+//    return countPrnLines;
+//}
 
 const vector<satObsValue_t>& EpochRecord::getSatObsValueList() const
 {
@@ -139,6 +137,8 @@ void EpochRecord::parseOneLineObs(vector<double> &obsList, const string &strLine
         obsList.push_back(value);
 
         pos += 16;
+
+        // added the two items:LLI and Signal strength,...
     }
 }
 
@@ -148,8 +148,6 @@ void EpochRecord::assigment(const EpochRecord &rhs)
     this->flagEpoch         = rhs.flagEpoch;
     this->countSat          = rhs.countSat;
     this->prnList           = rhs.prnList;
-    this->firstLine         = rhs.firstLine;
-    this->countPrnLines     = rhs.countPrnLines;
     this->clockOffsetRev    = rhs.clockOffsetRev;
     this->satObsValueList   = rhs.satObsValueList;
 }

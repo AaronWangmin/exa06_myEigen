@@ -29,7 +29,6 @@ void ObsDataFile::fromObsFile(const string &obsFile)
             if( string::npos != strline.substr(60).find("END OF HEADER")) break; // end of header
         }
 
-        ObsHeader obsHeader;
         obsHeader.parseObsHeader(strBlock);
 
         // parse the Obs data bady.

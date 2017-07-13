@@ -18,7 +18,7 @@ public:
     double                          getEpoch() const;
     int                             getCountSat() const;
     const vector<string>&           getPrnList() const;
-    int                             getCountPrnLines() const;
+//    int                             getCountPrnLines() const;
     const vector<satObsValue_t>&    getSatObsValueList() const;
 
 //    void    parseHeader(const string &strLine);
@@ -30,8 +30,6 @@ private:
     int                     flagEpoch;
     int                     countSat;
     vector<string>          prnList;              // edit! seperat G and num(G 02).
-    bool                    firstLine;            // Is the first line (prn)?
-    int                     countPrnLines;        // the count of  prn lines
     double                  clockOffsetRev;
     vector<satObsValue_t>   satObsValueList;
 

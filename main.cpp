@@ -4,6 +4,7 @@
 using namespace Eigen;
 
 #include <iostream>
+
 using namespace std;
 
 #include "weightobservation.h"
@@ -17,6 +18,35 @@ using namespace std;
 int main(int argc, char *argv[])
 {
    QCoreApplication a(argc, argv);
+
+   /**
+    * test:: c++
+    */
+//   string sNum = "3F-3 ";
+//   stringstream ss(sNum);
+//   double num;
+//   if(ss >> num){
+//     cout << num << endl;
+//   }else{
+//     cout << -1 << endl;
+//   }
+//   cout << endl;
+
+   //    vector<string> v;
+   //    strSplit(v,"  aa bb    ccc     ddd a",' ');
+
+   //    vector<double> span;
+   //    for(int i = 0; i < 12 ; i++){
+   //        span.push_back(1466467200 + i*7200);
+   //        posat.calculateFromBroadcast(2,span.back(),brdt);
+   //        cout << posat.getPositionSat() << endl << endl;
+   //    }
+
+   //    double d2 = 0.0000000000000000000000000000000000000000000000000000000001;
+   //    string d1 = "0.190200000000e+04";
+   //    cout << std::stod(d1) << endl;
+   //    cout << d2 << endl;
+
 
 /**
  * test: Eigen...
@@ -126,31 +156,17 @@ int main(int argc, char *argv[])
  *   test: position sat
  */
 
-    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc3430.14n");
-//    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
+//    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc3430.14n");
+    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
 
 //    PositionSat posat;
 //    posat.calculateFromBroadcast(1418083200,4,brdc);
 //    cout << endl << posat.getPositionSat() << endl;
 
-//    vector<string> v;
-//    strSplit(v,"  aa bb    ccc     ddd a",' ');
-
-//    vector<double> span;
-//    for(int i = 0; i < 12 ; i++){
-//        span.push_back(1466467200 + i*7200);
-//        posat.calculateFromBroadcast(2,span.back(),brdt);
-//        cout << posat.getPositionSat() << endl << endl;
-//    }
-
-//    double d2 = 0.0000000000000000000000000000000000000000000000000000000001;
-//    string d1 = "0.190200000000e+04";
-//    cout << std::stod(d1) << endl;
-//    cout << d2 << endl;
-
-
     ObsDataFile obsfile;
-    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/lhaz3430.14o");
+//    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/lhaz3430.14o");
+    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
+
 
     Vector4d posRec0(0,0,0,0);
     SSP ssp(posRec0,obsfile.getObsDataRecord().at(1),brdc);
