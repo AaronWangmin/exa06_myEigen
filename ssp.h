@@ -19,7 +19,8 @@ private:
     // int test;
 
     void BL(MatrixXd &B,MatrixXd &L,
-               const EpochRecord &epochRecord,const Broadcast &brdc,const Vector4d &posClockRec0);
+            const Vector4d &posClockRec0,
+            const EpochRecord &epochRecord,const Broadcast &brdc);
 
     int oneBL(RowVector4d &b,double &oneL,
                   const double tr, const string prn,const double pd,

@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 
 
     for(int i = 100; i < 105; i++){
-       Vector4d posRec0(0,0,0,0);
+       Vector4d posRec0(-1343047.1012,5322999.4152,3236981.6709,0);
        SSP ssp(posRec0,obsfile.getObsDataRecord().at(1),brdc);
        cout << posRec0 << endl << endl;
     }

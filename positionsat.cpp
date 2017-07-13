@@ -133,7 +133,7 @@ int PositionSat::searchClosestEph(eph_t& eph,
     const vector<eph_t> &ephRecord = brdc.getEphRecord();
     for(int i = 0; i < ephRecord.size(); i++){
         const eph_t &ephTemp = ephRecord.at(i);
-        if(prn == ephTemp.prn && abs(timeSat - ephTemp.toc) <= 8000)
+        if(prn == ephTemp.prn && abs(timeSat - ephTemp.toc) <= 3600)
         {
             eph = ephTemp;
 

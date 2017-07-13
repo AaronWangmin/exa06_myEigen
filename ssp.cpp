@@ -10,14 +10,14 @@ SSP::SSP(Vector4d &posRec0,const EpochRecord &epochRecord, const Broadcast &brdc
     while(1){
         MatrixXd B;
         MatrixXd L;
-        BL(B,L,epochRecord,brdc,posRec0);
+        BL(B,L,posRec0,epochRecord,brdc);
 
         CoefficientB coeB(B,L,posRec0);
         WeightObservation w(epochRecord.getGPSObsList().size());
 
         AdjustParameter adjust(coeB,w);
         posRec0 = adjust.getX();
-        if((adjust.getx().head(3)).cwiseAbs().maxCoeff() <= 1 &&
+        if((adjust.getx().head(3)).cwiseAbs().maxCoeff() <= 0.001 &&
            (adjust.getx().tail(1)).cwiseAbs().maxCoeff() <= C * (1E-7)){
         //    adjust.printResult();
             break;
@@ -31,19 +31,19 @@ SSP::SSP(Vector4d &posRec0,const EpochRecord &epochRecord, const Broadcast &brdc
  *
  * @param B             O, 误差方程系数，4列（X,X,X,1）
  * @param L             O, 误差议程常数项，1列
+ * @param posClockRec0  I, 接收机的坐标、及钟差，初始值为 0.
  * @param epochRecord   I
  * @param brdc          I
- * @param posClockRec0  I, 接收机的坐标、及钟差，初始值为 0.
+ *
  */
 void SSP::BL(MatrixXd &B,MatrixXd &L,
-             const EpochRecord &epochRecord,const Broadcast &brdc,const Vector4d &posClockRec0)
-{    
-
-
-    const vector<satObsValue_t> &satObsList =  epochRecord.getGPSObsList();     // gps 观测值的处理
+             const Vector4d &posClockRec0,
+             const EpochRecord &epochRecord,const Broadcast &brdc)
+{
+    const vector<satObsValue_t> &satObsList =  epochRecord.getGPSObsList();     // 一组 gps 观测值的处理
 
     // 第 i颗卫星，误差方差系数、及常数项的计算
-    int iSat = 0;
+    int index = 0;
     B.resize(satObsList.size(),4);
     L.resize(satObsList.size(),1);
 
@@ -55,9 +55,9 @@ void SSP::BL(MatrixXd &B,MatrixXd &L,
 
         // 如果 oneBL 计算的结果有效，进行如下操作
         if(0 == oneBL(b, oneL, tr, (*it).prn, (*it).obsValue.at(0), brdc,posClockRec0)){
-            B.row(iSat) = b;
-            L(iSat) = oneL;
-            iSat++;
+            B.row(index) = b;
+            L(index) = oneL;
+            ++index;
         }
     }
 }
@@ -97,7 +97,8 @@ int SSP::oneBL(RowVector4d &b,double &oneL,
         if(abs(sp2-sp) <= 1E-11){
             b << (temp/d).transpose(),1;             // 误差方程系统 b 的计算(一个伪距观测值)
 
-            oneL = pd - d - posClockRec0(3);         // 误差方程常数项 L 的计算(一个伪距观测值)
+//            oneL = pd - d - posClockRec0(3);         // 误差方程常数项 L 的计算(一个伪距观测值)
+            oneL = pd - d + posat.getDeltaTs() * C;
 
             return 0;
         }
