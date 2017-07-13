@@ -83,10 +83,9 @@ struct eph_t{                   // GPS broadcast ephemeris type,based on rinex2.
     double fit;
     double reserved,reserved01;
 
-    eph_t();                    // ? needed ?
-    eph_t(const eph_t &rhs);    // ? needed ?
-    eph_t& operator=(const eph_t &rhs);
-    //~eph_t();                 // ? needed ?
+    eph_t();
+    eph_t(const eph_t &rhs);
+    eph_t& operator=(const eph_t &rhs);   
 
 private:
     void assigment(const eph_t &rhs);

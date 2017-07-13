@@ -1,7 +1,8 @@
 #include "positionsat.h"
 
 PositionSat::PositionSat()
-    :delta_ts(0)
+    :delta_ts(0),
+     usable(1)
 {
 
 }
@@ -29,6 +30,11 @@ double PositionSat::getDeltaTs() const
     return delta_ts;
 }
 
+bool PositionSat::getUsable() const
+{
+    return usable;
+}
+
 /**
  * @brief PositionSat::calculateFromBroadcast
  *
@@ -40,7 +46,11 @@ double PositionSat::getDeltaTs() const
  */
 void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast &brdc)
 {
-    eph_t eph = searchClosestEph(timeSat,prn,brdc);
+    eph_t eph;
+    if(0 != searchClosestEph(eph,timeSat,prn,brdc)){
+       usable = false;
+       return;
+    }else{
 
     // transfer the double to gpst(week, seconds)
     gtime_t tSat((int)timeSat,timeSat - (int)timeSat );
@@ -105,7 +115,9 @@ void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast 
     double Yk = xk * sin(OMEGA_K) + yk * cos(ik) *cos(OMEGA_K);
     double Zk = yk * sin(ik);
 
-    positionSat << Xk,Yk,Zk;
+    positionSat << Xk,Yk,Zk;    
+
+    }
 }
 
 /**
@@ -115,23 +127,28 @@ void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast 
  * @param brdc          I       Broadcast
  * @return 0:ok, -1:false
  */
-eph_t PositionSat::searchClosestEph(double timeSat,int prn,const Broadcast &brdc) const
+int PositionSat::searchClosestEph(eph_t& eph,
+                                  double timeSat,int prn,const Broadcast &brdc) const
 {
     const vector<eph_t> &ephRecord = brdc.getEphRecord();
     for(int i = 0; i < ephRecord.size(); i++){
-        eph_t eph(ephRecord.at(i));        
-        if(prn == eph.prn && abs(timeSat - eph.toc) <= 3600)
+        const eph_t &ephTemp = ephRecord.at(i);
+        if(prn == ephTemp.prn && abs(timeSat - ephTemp.toc) <= 8000)
         {
-            return ephRecord.at(i);
+            eph = ephTemp;
+
+            return 0;
         }
     }
 
-    cout << " no eph !" << endl;        // ? return a tag of not found.
+    cout << " sat prn: " << prn << " no eph !" << endl;
+    return -1;
 }
 
 void PositionSat::assignment(const PositionSat &rhs)
 {
     this->positionSat    = rhs.positionSat;
     this->delta_ts       = rhs.delta_ts;
+    this->usable         = rhs.usable;
 }
 

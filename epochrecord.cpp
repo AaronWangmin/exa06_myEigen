@@ -45,6 +45,15 @@ const vector<satObsValue_t>& EpochRecord::getSatObsValueList() const
     return satObsValueList;
 }
 
+const vector<satObsValue_t>& EpochRecord::getGPSObsList() const
+{
+    return gpsSatObsList;
+}
+const vector<satObsValue_t>& EpochRecord::getGlonassObsList() const
+{
+    return glonassSatObsList;
+}
+
 void EpochRecord::parseHeader(const vector<string> &strBlock)
 {
     string strLine = strBlock.at(0);
@@ -83,7 +92,14 @@ void EpochRecord::parseBody(const vector<string> &strBlock,int linesObsValue)
         oneSatObs.prn = prnList.at(iSat);
         iSat++;
 
-        satObsValueList.push_back(oneSatObs);
+        if(string::npos != oneSatObs.prn.find("G")){
+            gpsSatObsList.push_back(oneSatObs);
+        }else if(string::npos != oneSatObs.prn.find("R")){
+            glonassSatObsList.push_back(oneSatObs);
+        }else{
+            // add...
+            // beidou...
+        }
     }
 }
 
@@ -150,4 +166,6 @@ void EpochRecord::assigment(const EpochRecord &rhs)
     this->prnList           = rhs.prnList;
     this->clockOffsetRev    = rhs.clockOffsetRev;
     this->satObsValueList   = rhs.satObsValueList;
+    this->gpsSatObsList     = rhs.gpsSatObsList;
+    this->glonassSatObsList = rhs.glonassSatObsList;
 }

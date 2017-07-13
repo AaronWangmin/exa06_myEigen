@@ -21,7 +21,7 @@ private:
     void BL(MatrixXd &B,MatrixXd &L,
                const EpochRecord &epochRecord,const Broadcast &brdc,const Vector4d &posClockRec0);
 
-    void oneBL(RowVector4d &b,double &oneL,
+    int oneBL(RowVector4d &b,double &oneL,
                   const double tr, const string prn,const double pd,
                   const Broadcast &brdc,const Vector4d &posClockRec0);
 };

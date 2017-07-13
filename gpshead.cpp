@@ -211,10 +211,10 @@ extern int str2time(const string& str,int pos,int npos,gtime_t& t)
 extern void strSplit(vector<string>& strlist,const string& str, const char c)
 {
     string::const_iterator it;
-    for(it = str.begin(); it != str.end(); it++){
+    for(it = str.begin(); it != str.end(); ){
         string::const_iterator head;
 
-        for( ; it != str.end();it++){              // 查找第一个 不等于 分割符的字符。
+        for( ; it != str.end();++it){              // 查找第一个 不等于 分割符的字符。
             char temp = *it;
             if( temp != c ){
                 head = it;
@@ -222,10 +222,12 @@ extern void strSplit(vector<string>& strlist,const string& str, const char c)
             }
         }
 
-        if(it == str.end()) break;
+        if(it == str.end()){
+            break;
+        }
 
         string result;
-        for( ; it != str.end();it++){           // 查找第一个 等于 分割符的字符。
+        for( ; it != str.end();++it){           // 查找第一个 等于 分割符的字符。
             char temp = *it;
             if(temp == c)   break;
 

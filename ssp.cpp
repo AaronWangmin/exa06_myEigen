@@ -13,19 +13,16 @@ SSP::SSP(Vector4d &posRec0,const EpochRecord &epochRecord, const Broadcast &brdc
         BL(B,L,epochRecord,brdc,posRec0);
 
         CoefficientB coeB(B,L,posRec0);
-        WeightObservation w(epochRecord.getCountSat());
+        WeightObservation w(epochRecord.getGPSObsList().size());
 
         AdjustParameter adjust(coeB,w);
         posRec0 = adjust.getX();
         if((adjust.getx().head(3)).cwiseAbs().maxCoeff() <= 1 &&
            (adjust.getx().tail(1)).cwiseAbs().maxCoeff() <= C * (1E-7)){
-            adjust.printResult();
+        //    adjust.printResult();
             break;
         }
     }
-
-//    cout << "B:" << endl << B <<endl;
-//    cout << "L:" << endl << L <<endl;
 }
 /**
  * @brief SSP::BL
@@ -43,25 +40,25 @@ void SSP::BL(MatrixXd &B,MatrixXd &L,
 {    
 
 
-    const vector<satObsValue_t> &satObsList =  epochRecord.getSatObsValueList();
+    const vector<satObsValue_t> &satObsList =  epochRecord.getGPSObsList();     // gps 观测值的处理
 
     // 第 i颗卫星，误差方差系数、及常数项的计算
     int iSat = 0;
-    B.resize(epochRecord.getCountSat(),4);
-    L.resize(epochRecord.getCountSat(),1);
+    B.resize(satObsList.size(),4);
+    L.resize(satObsList.size(),1);
 
     vector<satObsValue_t>::const_iterator it;
     for(it = satObsList.begin();it != satObsList.end();it++){
-        satObsValue_t satObsValue;                              // a satellite observation list process.
-        satObsValue = *it;
-
         double tr = epochRecord.getEpoch() + posClockRec0(3)/C ;      // the moment of receiver observation.
         RowVector4d b;
         double oneL;
-        oneBL(b, oneL, tr, satObsValue.prn, satObsValue.obsValue.at(0), brdc,posClockRec0);
-        B.row(iSat) = b;
-        L(iSat) = oneL;
-        iSat++;
+
+        // 如果 oneBL 计算的结果有效，进行如下操作
+        if(0 == oneBL(b, oneL, tr, (*it).prn, (*it).obsValue.at(0), brdc,posClockRec0)){
+            B.row(iSat) = b;
+            L(iSat) = oneL;
+            iSat++;
+        }
     }
 }
 
@@ -77,8 +74,9 @@ void SSP::BL(MatrixXd &B,MatrixXd &L,
  * @param pd            I
  * @param brdc          I
  * @param posClockRec0  I
+ * @return 0:ok, -1:false
  */
-void SSP::oneBL(RowVector4d &b,double &oneL,
+int SSP::oneBL(RowVector4d &b,double &oneL,
                    const double tr, const string prn,const double pd,
                    const Broadcast &brdc,const Vector4d &posClockRec0)
 {
@@ -89,6 +87,9 @@ void SSP::oneBL(RowVector4d &b,double &oneL,
 
         PositionSat posat;
         posat.calculateFromBroadcast(ts,iPrn,brdc);
+        if(!posat.getUsable()){                // 如果卫星位置不可用，无法计算 b oneL,退出函数。
+            return -1;
+        }
 
         Vector3d temp = posClockRec0.head(3) - posat.getPositionSat();
         double d = sqrt((temp.array().square()).matrix().sum());
@@ -96,9 +97,9 @@ void SSP::oneBL(RowVector4d &b,double &oneL,
         if(abs(sp2-sp) <= 1E-11){
             b << (temp/d).transpose(),1;             // 误差方程系统 b 的计算(一个伪距观测值)
 
-            oneL = pd - d - posClockRec0(3);        // 误差方程常数项 L 的计算(一个伪距观测值)
+            oneL = pd - d - posClockRec0(3);         // 误差方程常数项 L 的计算(一个伪距观测值)
 
-            break;
+            return 0;
         }
         sp = sp2;
     }
