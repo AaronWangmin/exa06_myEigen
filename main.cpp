@@ -167,10 +167,9 @@ int main(int argc, char *argv[])
 //    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/lhaz3430_1.14o");
     obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
 
-
-    for(int i = 100; i < 105; i++){
+    for(int i = 0; i < 105; i++){
        Vector4d posRec0(0,0,0,0);
-       SSP ssp(posRec0,obsfile.getObsDataRecord().at(1),brdc);
+       SSP ssp(posRec0,obsfile.getObsDataRecord().at(i),brdc);
        cout << posRec0 << endl << endl;
     }
 

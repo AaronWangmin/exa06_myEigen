@@ -16,6 +16,7 @@ public:
     EpochRecord& operator=(const EpochRecord &rhs);
 
     double                          getEpoch()              const;
+    int                             getFlagEpoch()          const;
     int                             getCountSat()           const;
     const vector<string>&           getPrnList()            const;
     const vector<satObsValue_t>&    getSatObsValueList()    const;

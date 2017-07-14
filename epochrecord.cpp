@@ -25,6 +25,11 @@ double EpochRecord::getEpoch() const
     return epoch;
 }
 
+int EpochRecord::getFlagEpoch() const
+{
+    return flagEpoch;
+}
+
 int EpochRecord::getCountSat() const
 {
     return countSat;

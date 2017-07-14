@@ -7,6 +7,11 @@ SSP::SSP()
 
 SSP::SSP(Vector4d &posRec0,const EpochRecord &epochRecord, const Broadcast &brdc)
 {
+    if(0 != epochRecord.getFlagEpoch()){
+        cout << " the epoch record is not available !" << endl;
+        return;
+    }
+
     while(1){
         Matrix<double,Dynamic,4> B;
         VectorXd L;
@@ -40,6 +45,11 @@ void SSP::BL(Matrix<double,Dynamic,4> &B,VectorXd &L,       // MatrixXd &B,Vecto
              const Vector4d &posClockRec0,
              const EpochRecord &epochRecord,const Broadcast &brdc)
 {
+//    if(0 != epochRecord.getFlagEpoch()){
+//        cout << " the epoch record is not available !" << endl;
+//        return -1;
+//    }
+
     const vector<satObsValue_t> &satObsList =  epochRecord.getGPSObsList();     // 一组 gps 观测值的处理
 
     // 第 i颗卫星，误差方差系数、及常数项的计算
