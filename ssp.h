@@ -16,15 +16,13 @@ public:
     SSP(Vector4d &posClockRec0,const EpochRecord &epochRecord,const Broadcast &brdc);
 
 private:
-    // int test;
-
-    void BL(MatrixXd &B,MatrixXd &L,
+    void BL(Matrix<double,Dynamic,4> &B,VectorXd &L,
             const Vector4d &posClockRec0,
             const EpochRecord &epochRecord,const Broadcast &brdc);
 
     int oneBL(RowVector4d &b,double &oneL,
-                  const double tr, const string prn,const double pd,
-                  const Broadcast &brdc,const Vector4d &posClockRec0);
+              const double tr, const string prn,const double pd,
+              const Broadcast &brdc,const Vector4d &posClockRec0);
 };
 
 #endif // SSP_H

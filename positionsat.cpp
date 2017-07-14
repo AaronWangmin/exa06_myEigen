@@ -44,13 +44,13 @@ bool PositionSat::getUsable() const
  * @param prn
  * @param brdc
  */
-void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast &brdc)
+int PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast &brdc)
 {
     eph_t eph;
     if(0 != searchClosestEph(eph,timeSat,prn,brdc)){
        usable = false;
-       return;
-    }else{
+       return -1;
+    }
 
     // transfer the double to gpst(week, seconds)
     gtime_t tSat((int)timeSat,timeSat - (int)timeSat );
@@ -115,9 +115,9 @@ void PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast 
     double Yk = xk * sin(OMEGA_K) + yk * cos(ik) *cos(OMEGA_K);
     double Zk = yk * sin(ik);
 
-    positionSat << Xk,Yk,Zk;    
+    positionSat << Xk,Yk,Zk;
 
-    }
+    return 0;
 }
 
 /**
@@ -136,7 +136,6 @@ int PositionSat::searchClosestEph(eph_t& eph,
         if(prn == ephTemp.prn && abs(timeSat - ephTemp.toc) <= 3600)
         {
             eph = ephTemp;
-
             return 0;
         }
     }

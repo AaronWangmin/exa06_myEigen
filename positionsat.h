@@ -16,7 +16,7 @@ public:
     double  getDeltaTs() const;
     bool    getUsable() const;
 
-    void calculateFromBroadcast(double timeSat,int prn,const Broadcast& brdc);
+    int calculateFromBroadcast(double timeSat,int prn,const Broadcast& brdc);
 
 
 

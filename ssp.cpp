@@ -8,12 +8,12 @@ SSP::SSP()
 SSP::SSP(Vector4d &posRec0,const EpochRecord &epochRecord, const Broadcast &brdc)
 {
     while(1){
-        MatrixXd B;
-        MatrixXd L;
+        Matrix<double,Dynamic,4> B;
+        VectorXd L;
         BL(B,L,posRec0,epochRecord,brdc);
 
         CoefficientB coeB(B,L,posRec0);
-        WeightObservation w(epochRecord.getGPSObsList().size());
+        WeightObservation w(B.rows());
 
         AdjustParameter adjust(coeB,w);
         posRec0 = adjust.getX();
@@ -36,16 +36,15 @@ SSP::SSP(Vector4d &posRec0,const EpochRecord &epochRecord, const Broadcast &brdc
  * @param brdc          I
  *
  */
-void SSP::BL(MatrixXd &B,MatrixXd &L,
+void SSP::BL(Matrix<double,Dynamic,4> &B,VectorXd &L,       // MatrixXd &B,VectorXd &L,
              const Vector4d &posClockRec0,
              const EpochRecord &epochRecord,const Broadcast &brdc)
 {
     const vector<satObsValue_t> &satObsList =  epochRecord.getGPSObsList();     // 一组 gps 观测值的处理
 
     // 第 i颗卫星，误差方差系数、及常数项的计算
-    int index = 0;
-    B.resize(satObsList.size(),4);
-    L.resize(satObsList.size(),1);
+    vector<RowVector4d> vB;
+    vector<double> vL;
 
     vector<satObsValue_t>::const_iterator it;
     for(it = satObsList.begin();it != satObsList.end();it++){
@@ -55,10 +54,16 @@ void SSP::BL(MatrixXd &B,MatrixXd &L,
 
         // 如果 oneBL 计算的结果有效，进行如下操作
         if(0 == oneBL(b, oneL, tr, (*it).prn, (*it).obsValue.at(0), brdc,posClockRec0)){
-            B.row(index) = b;
-            L(index) = oneL;
-            ++index;
+            vB.push_back(b);
+            vL.push_back(oneL);
         }
+    }
+
+    B.resize(vL.size(),4);
+    L.resize(vL.size(),1);
+    for(unsigned int i = 0; i < vL.size(); i++){
+        B.row(i) = vB.at(i);
+        L(i) = vL.at(i);
     }
 }
 

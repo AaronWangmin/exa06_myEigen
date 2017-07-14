@@ -156,20 +156,20 @@ int main(int argc, char *argv[])
  *   test: position sat
  */
 
-    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc3430.14n");
-//    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
+//    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc3430.14n");
+    Broadcast brdc("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/brdc1730.16n");
 
 //    PositionSat posat;
 //    posat.calculateFromBroadcast(1418083200,4,brdc);
 //    cout << endl << posat.getPositionSat() << endl;
 
     ObsDataFile obsfile;
-    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/lhaz3430_1.14o");
-//    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
+//    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/lhaz3430_1.14o");
+    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
 
 
     for(int i = 100; i < 105; i++){
-       Vector4d posRec0(-1343047.1012,5322999.4152,3236981.6709,0);
+       Vector4d posRec0(0,0,0,0);
        SSP ssp(posRec0,obsfile.getObsDataRecord().at(1),brdc);
        cout << posRec0 << endl << endl;
     }
