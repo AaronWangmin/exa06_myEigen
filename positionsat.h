@@ -14,16 +14,19 @@ public:
 
     const   Vector3d& getPositionSat() const;
     double  getDeltaTs() const;
-    bool    getUsable() const;
+    bool    getUsable() const;    
 
-    int calculateFromBroadcast(double timeSat,int prn,const Broadcast& brdc);
-
-
+    int fromBroadcast(double           timeRec,
+                      int              prn,
+                      const            Broadcast& brdc,
+                      const Vector4d   &posClockRec0);
 
 private:
     Vector3d    positionSat;
     double      delta_ts;            // 卫星钟差
     bool        usable;
+
+    int calculateFromBroadcast(double timeSat,int prn,const Broadcast& brdc);
 
     int searchClosestEph(eph_t& eph,
                            double timeSat,int prn,const Broadcast& brdc) const;

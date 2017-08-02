@@ -36,9 +36,41 @@ bool PositionSat::getUsable() const
 }
 
 /**
+ * @brief PositionSat::fromBroadcast
+ *
+ * 计算卫星的位置：以接收机的时间为参考
+ *
+ * @param timeRec
+ * @param prn
+ * @param brdc
+ * @return
+ */
+int PositionSat::fromBroadcast(double           timeRec,
+                               int              prn,
+                               const            Broadcast& brdc,
+                               const Vector4d   &posClockRec0)
+{
+    double sp = 0.075;
+    while(1){
+        double  ts = timeRec - sp;
+        if( -1 == calculateFromBroadcast(ts,prn,brdc)) return -1;       // 若计算失败，函数返回；
+
+        double d = distance2Points(posClockRec0.head(3) ,positionSat);
+        double sp2 = d/C;
+        if(abs(sp2-sp) <= 1E-11){
+            return 0;
+        }
+        sp = sp2;
+    }
+}
+
+/**
  * @brief PositionSat::calculateFromBroadcast
  *
- * 卫星位置计算时，toe 以 GPS秒为参考进行计算，
+ *  计算卫星的位置：以卫星的时间为参考；
+ *
+ *  卫星位置计算时，toe 以 GPS秒为参考进行计算；
+ *
  *
  * @param timeSat
  * @param prn

@@ -2,7 +2,7 @@
 #define OBSDATAFILE_H
 
 #include "obsheader.h"
-#include "epochrecord.h"
+#include "epochrecordFactory.h"
 
 /**
  * @brief The ObsDataFile class
@@ -13,14 +13,15 @@ class ObsDataFile
 public:
     ObsDataFile();
 
-    const vector<EpochRecord>& getObsDataRecord() const;
-
-    void fromObsFile(const string& obsFile);
+    const vector<epochRecord_t>&  getObsDataRecord()           const;
+    void                          fromObsFile(const string& obsFile);
 
 private:
-    ObsHeader obsHeader;
-    vector<EpochRecord> obsDataRecord;
-    int calculateLinesPrn(int countSat) const;          // the lines of epoch record header.
+    ObsHeader             obsHeader;
+    vector<epochRecord_t> obsDataRecord;
+
+private:
+    int calculateLinesPrn(int countSat) const;  // the lines of epoch record header.
 };
 
 #endif // OBSDATAFILE_H

@@ -130,6 +130,37 @@ private:
     void assigment(const satObsValue_t &rhs);
 };
 
+struct epochRecord_t{
+    double                  epoch;
+    int                     flagEpoch;
+    int                     countSat;
+    vector<string>          prnList;
+    double                  clockOffsetRev;
+    vector<satObsValue_t>   gpsSatObsList;
+    vector<satObsValue_t>   glonassSatObsList;
+
+    epochRecord_t();
+    epochRecord_t(const epochRecord_t &rhs);
+    epochRecord_t& operator= (const epochRecord_t &rhs);
+
+private:
+    void assigment(const epochRecord_t &rhs);
+};
+
+struct pseudoCorretions_t{
+    double epochTime;
+    string prn;
+    double value;
+
+//    vector< Map<string,double> > dd;
+
+    pseudoCorretions_t();
+    pseudoCorretions_t(const pseudoCorretions_t &rhs);
+    pseudoCorretions_t& operator= (const pseudoCorretions_t &rhs);
+
+private:
+    void assigment(const pseudoCorretions_t &rhs);
+};
 
 extern double extractDouble(const string& str,int pos,int npos);        // ? extern
 
@@ -140,6 +171,8 @@ extern double timeDiff(gtime_t t1, gtime_t t2);
 extern gtime_t epoch2time(const double *ep);
 extern gtime_t gpst2time(int week, double sec);
 extern double  time2gpst(gtime_t t, int &week);
+
+extern double distance2Points(const Vector3d &point1, const Vector3d &point2);
 
 
 

@@ -156,6 +156,62 @@ void satObsValue_t::assigment(const satObsValue_t &rhs)
     this->obsValue = rhs.obsValue;
 }
 
+epochRecord_t::epochRecord_t()
+    :epoch(0),
+     flagEpoch(0),
+     countSat(0),
+     clockOffsetRev(0)
+{
+
+}
+
+epochRecord_t::epochRecord_t(const epochRecord_t &rhs)
+{
+    assigment(rhs);
+}
+
+epochRecord_t& epochRecord_t::operator =(const epochRecord_t &rhs)
+{
+    assigment(rhs);
+    return *this;
+}
+
+void epochRecord_t::assigment(const epochRecord_t &rhs)
+{
+    this->epoch                 = rhs.epoch;
+    this->flagEpoch             = rhs.flagEpoch;
+    this->countSat              = rhs.countSat;
+    this->prnList               = rhs.prnList;
+    this->clockOffsetRev        = rhs.clockOffsetRev;
+    this->gpsSatObsList         = rhs.gpsSatObsList;
+    this->glonassSatObsList     = rhs.glonassSatObsList;
+}
+
+pseudoCorretions_t::pseudoCorretions_t()
+    :epochTime(0),
+     value(0)
+{
+
+}
+
+pseudoCorretions_t::pseudoCorretions_t(const pseudoCorretions_t &rhs)
+{
+    assigment(rhs);
+}
+
+pseudoCorretions_t& pseudoCorretions_t::operator= (const pseudoCorretions_t &rhs)
+{
+    assigment(rhs);
+    return *this;
+}
+
+void pseudoCorretions_t::assigment(const pseudoCorretions_t &rhs)
+{
+    this->epochTime = rhs.epochTime;
+    this->prn       = rhs.prn;
+    this->value     = rhs.value;
+}
+
 
 /**
  * @brief extractDouble,
@@ -300,3 +356,8 @@ extern double time2gpst(gtime_t t, int &week){
     return (double)(sec-w*86400*7)+t.sec;
 }
 
+extern double distance2Points(const Vector3d &point1, const Vector3d &point2)
+{
+    Vector3d temp = point1 - point2;
+    return sqrt((temp.array().square()).matrix().sum());
+}

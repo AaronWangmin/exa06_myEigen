@@ -7,7 +7,7 @@ ObsDataFile::ObsDataFile()
 
 }
 
-const vector<EpochRecord>& ObsDataFile::getObsDataRecord() const
+const vector<epochRecord_t>& ObsDataFile::getObsDataRecord() const
 {
     return obsDataRecord;
 }
@@ -46,8 +46,8 @@ void ObsDataFile::fromObsFile(const string &obsFile)
                 strBlock.push_back(strline);
             }
 
-            EpochRecord epochRec;
-            epochRec.parseHeader(strBlock);
+            EpochRecordFactory epochRecFactory;
+            epochRecFactory.parseHeader(strBlock);
 
             //extract a body of one epoch record
             strBlock.clear();
@@ -56,9 +56,9 @@ void ObsDataFile::fromObsFile(const string &obsFile)
                 strBlock.push_back(strline);
             }
 
-            epochRec.parseBody(strBlock,obsHeader.calculateLinesObsValue());
+            epochRecFactory.parseBody(strBlock,obsHeader.calculateLinesObsValue());
 
-            obsDataRecord.push_back(epochRec);           // added a epoch record  to a vector.
+            obsDataRecord.push_back(epochRecFactory.getEpochRecord());           // added a epoch record  to a vector.
         }
 
         fs.close();

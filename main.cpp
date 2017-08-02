@@ -14,6 +14,8 @@ using namespace std;
 #include "positionsat.h"
 #include "obsdatafile.h"
 #include "ssp.h"
+#include "pseudocorrectionsfactory.h"
+#include "dgps.h"
 
 int main(int argc, char *argv[])
 {
@@ -167,11 +169,30 @@ int main(int argc, char *argv[])
 //    obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/lhaz3430_1.14o");
     obsfile.fromObsFile("D:/exam_cs106/code_aaron_cs106/exa06_myEigen/scch1730.16o");
 
-    for(int i = 0; i < 105; i++){
+    for(int i = 1; i < 2; i++){
        Vector4d posRec0(0,0,0,0);
        SSP ssp(posRec0,obsfile.getObsDataRecord().at(i),brdc);
        cout << posRec0 << endl << endl;
     }
+
+    /**
+     *   test: pseudoCorretions_t
+     */
+
+    epochRecord_t epochRecord_0 = obsfile.getObsDataRecord().at(1);
+    Vector4d    posClockbase;
+    posClockbase << -1343047.1012,5322999.4152,3236981.6709,0;
+
+    PseudoCorrectionsFactory deltaPseu;
+    deltaPseu.correctionsFrom(epochRecord_0,posClockbase,brdc);
+    cout << "pseu....." << endl;
+
+    /**
+     *   test: dgps
+     */
+    DGPS dgps(posClockbase,epochRecord_0,deltaPseu.listPseudoCorrections(),brdc);
+    cout << "DGPS..." << endl;
+
 
 
    return a.exec();

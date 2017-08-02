@@ -25,8 +25,10 @@ SOURCES += main.cpp \
     positionsat.cpp \
     obsdatafile.cpp \
     obsheader.cpp \
-    epochrecord.cpp \
-    ssp.cpp
+    ssp.cpp \
+    dgps.cpp \
+    pseudocorrectionsfactory.cpp \
+    epochrecordFactory.cpp
 
 HEADERS += \
     adjustparameter.h \
@@ -37,5 +39,7 @@ HEADERS += \
     positionsat.h \
     obsdatafile.h \
     obsheader.h \
-    epochrecord.h \
-    ssp.h
+    ssp.h \
+    dgps.h \
+    pseudocorrectionsfactory.h \
+    epochrecordFactory.h
