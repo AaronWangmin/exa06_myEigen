@@ -23,7 +23,7 @@ SSP::SSP(Vector4d &posRec0,const epochRecord_t &epochRecord, const Broadcast &br
         AdjustParameter adjust(coeB,w);
         posRec0 = adjust.getX();
         if((adjust.getx().head(3)).cwiseAbs().maxCoeff() <= 0.001 &&
-           (adjust.getx().tail(1)).cwiseAbs().maxCoeff() <= C * (1E-7)){
+                (adjust.getx().tail(1)).cwiseAbs().maxCoeff() <= C * (1E-7)){
         //    adjust.printResult();
             break;
         }

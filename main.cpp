@@ -190,7 +190,9 @@ int main(int argc, char *argv[])
     /**
      *   test: dgps
      */
-    DGPS dgps(posClockbase,epochRecord_0,deltaPseu.listPseudoCorrections(),brdc);
+    Vector4d posClockRover;
+    posClockRover << 0,0,0,0;
+    DGPS dgps(posClockRover,epochRecord_0,deltaPseu.listPseudoCorrections(),brdc);
     cout << "DGPS..." << endl;
 
 
