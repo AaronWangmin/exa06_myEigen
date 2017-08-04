@@ -17,7 +17,7 @@ using namespace std;
 class Broadcast
 {
 public:
-//    Broadcast();                              // ? needed ?
+    Broadcast();                              // ? needed ?
     Broadcast(const string &navFile);           // from the rinex file.
 
     const vector<eph_t>& getEphRecord() const;

@@ -12,14 +12,14 @@ public:
     PositionSat(const PositionSat &rhs);
     PositionSat& operator= (const PositionSat &rhs);
 
-    const   Vector3d& getPositionSat() const;
-    double  getDeltaTs() const;
-    bool    getUsable() const;    
+    const   Vector3d& getPositionSat()  const;
+    double  getDeltaTs()                const;
+    bool    getUsable()                 const;
 
-    int fromBroadcast(double           timeRec,
-                      int              prn,
-                      const            Broadcast& brdc,
-                      const Vector4d   &posClockRec0);
+    int     fromBroadcast(double           timeRec,
+                          int              prn,
+                          const            Broadcast& brdc,
+                          const Vector4d   &posClockRec0);
 
 private:
     Vector3d    positionSat;

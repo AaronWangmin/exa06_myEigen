@@ -52,7 +52,7 @@ int PositionSat::fromBroadcast(double           timeRec,
 {
     double sp = 0.075;
     while(1){
-        double  ts = timeRec - sp;
+        double  ts = timeRec + posClockRec0(3)/C - sp;
         if( -1 == calculateFromBroadcast(ts,prn,brdc)) return -1;       // 若计算失败，函数返回；
 
         double d = distance2Points(posClockRec0.head(3) ,positionSat);
@@ -87,16 +87,10 @@ int PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast &
     // transfer the double to gpst(week, seconds)
     gtime_t tSat((int)timeSat,timeSat - (int)timeSat );
     int weekSat;
-    double secondsSat = time2gpst(tSat, weekSat);
+    double secondsSat = time2gpst(tSat, weekSat);   
 
-    // gps clock diff
-    delta_ts = eph.af0 +
-               eph.af1 *(secondsSat - eph.toe) +
-               eph.af2 *pow((secondsSat - eph.toe),2);
-
-    // 计算卫星发射时刻与参考时刻的差
-//    double tk =  timeSat - eph.toe;
-    double tk =  secondsSat - delta_ts -eph.toe;
+    // 计算卫星发射时刻与参考时刻的差,以GPS秒进行计算
+    double tk =  secondsSat - eph.toe;
     if     (tk >  302400)     tk = 302400 - 604800;
     else if(tk < -302400)     tk = 302400 + 604800;
     else                      tk = tk;
@@ -148,6 +142,12 @@ int PositionSat::calculateFromBroadcast(double timeSat,int prn,const Broadcast &
     double Zk = yk * sin(ik);
 
     positionSat << Xk,Yk,Zk;
+
+    // gps clock diff
+    delta_ts = eph.af0 +
+               eph.af1 *(secondsSat - eph.toe) +
+               eph.af2 *pow((secondsSat - eph.toe),2) +
+               F * eph.e * eph.sqrtA * sin(Ek) - eph.tgd;     // 相对论效应改正
 
     return 0;
 }

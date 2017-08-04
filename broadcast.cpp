@@ -4,6 +4,11 @@
 #include <fstream>
 using namespace std;
 
+Broadcast::Broadcast()
+{
+
+}
+
 Broadcast::Broadcast(const string &navFile)
 {
    fstream fs(navFile);

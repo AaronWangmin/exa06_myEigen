@@ -17,6 +17,7 @@ const static double C       = 299792458; 		    // 光速
 const static double PI      = 3.141592653589793;    // 圆周率
 const static double GM      = 3.986004415E+14;      // 地球引力常数
 const static double OMEGA_E = 7.2921151467E-5;      // 地球自转角速度
+const static double F       = -4.442807633E-10;     // sec * pow(m,-1/2)
 
 const static double gpst0[]={1980,1, 6,0,0,0}; /* gps time reference */
 

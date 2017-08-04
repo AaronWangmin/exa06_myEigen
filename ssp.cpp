@@ -7,7 +7,7 @@ SSP::SSP()
 
 SSP::SSP(Vector4d &posRec0,const epochRecord_t &epochRecord, const Broadcast &brdc)
 {
-    if(0 != epochRecord.flagEpoch){
+    if(0 != dataPrepareForSPP(epochRecord,brdc)){
         cout << " the epoch record is not available !" << endl;
         return;
     }
@@ -61,6 +61,8 @@ void SSP::BL(Matrix<double,Dynamic,4> &B,VectorXd &L,
         if(0 == oneBL(b, oneL, tr, (*it).prn, (*it).obsValue.at(0), brdc,posClockRec0)){
             vB.push_back(b);
             vL.push_back(oneL);
+        }else{
+//            satObsList.erase(it);
         }
     }
 
@@ -103,3 +105,29 @@ int SSP::oneBL(RowVector4d &b,double &oneL,
 
     return 0;
 }
+
+int SSP::dataPrepareForSPP(const epochRecord_t &epochRecord, const Broadcast &brdc)
+{
+    if(0 != epochRecord.flagEpoch){
+        cout << " the epoch record is not available !" << endl;
+        return -1;
+    }
+
+    const vector<satObsValue_t> &rawGPGObsList = epochRecord.gpsSatObsList;
+    vector<satObsValue_t>::const_iterator it;
+    for(it = rawGPGObsList.begin(); it != rawGPGObsList.end(); it++){
+
+        const vector<eph_t> &eph = brdc.getEphRecord();
+        vector<eph_t>::const_iterator it_eph;
+        for(it_eph = eph.begin(); it_eph != eph.end(); it_eph++){
+            int prn = std::stoi((*it).prn.substr(1,2));
+            if(prn == (*it_eph).prn && abs(epochRecord.epoch - (*it_eph).toc) <= 3600){
+                newEpochRecord.gpsSatObsList.push_back(*it);
+                gpsOrbList.push_back(*it_eph);
+            }
+        }
+    }
+
+    return 0;
+}
+

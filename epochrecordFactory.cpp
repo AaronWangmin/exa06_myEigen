@@ -30,6 +30,7 @@ void EpochRecordFactory::parseHeader(const vector<string> &strBlock)
     epochRecord.epoch               = gtime.time + gtime.sec;
 
     epochRecord.flagEpoch           = extractDouble(strLine,28,1);
+
     epochRecord.countSat            = extractDouble(strLine,29,3);
 
     vector<string>::const_iterator it;
