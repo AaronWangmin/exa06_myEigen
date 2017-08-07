@@ -21,8 +21,8 @@ public:
 private:
     epochRecord_t         newEpochRecord;   // 一个观测历元有效的卫星观测值，及星历
     Broadcast             newBrdc;
-    vector<satObsValue_t> gpsObsList;
-    vector<eph_t>         gpsOrbList;
+//    vector<satObsValue_t> gpsObsList;
+//    vector<eph_t>         gpsOrbList;
 
     void BL(Matrix<double,Dynamic,4>    &B,
             VectorXd                    &L,

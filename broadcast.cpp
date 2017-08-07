@@ -41,6 +41,11 @@ const vector<eph_t>& Broadcast::getEphRecord() const
     return ephRecord;
 }
 
+void Broadcast::setEphRecord(const vector<eph_t> &newEphRecord)
+{
+    ephRecord = newEphRecord;
+}
+
 int Broadcast::parseNavHead(const string &strline)
 {
     // need to add a struct of navHead_t to store the NavHead......

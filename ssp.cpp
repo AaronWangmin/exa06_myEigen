@@ -113,6 +113,9 @@ int SSP::dataPrepareForSPP(const epochRecord_t &epochRecord, const Broadcast &br
         return -1;
     }
 
+    newEpochRecord = epochRecord;
+    vector<eph_t> newEph;
+
     const vector<satObsValue_t> &rawGPGObsList = epochRecord.gpsSatObsList;
     vector<satObsValue_t>::const_iterator it;
     for(it = rawGPGObsList.begin(); it != rawGPGObsList.end(); it++){
@@ -123,10 +126,12 @@ int SSP::dataPrepareForSPP(const epochRecord_t &epochRecord, const Broadcast &br
             int prn = std::stoi((*it).prn.substr(1,2));
             if(prn == (*it_eph).prn && abs(epochRecord.epoch - (*it_eph).toc) <= 3600){
                 newEpochRecord.gpsSatObsList.push_back(*it);
-                gpsOrbList.push_back(*it_eph);
+                newEph.push_back(*it_eph);
             }
         }
     }
+
+    newBrdc.setEphRecord(newEph);
 
     return 0;
 }

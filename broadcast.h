@@ -21,6 +21,7 @@ public:
     Broadcast(const string &navFile);           // from the rinex file.
 
     const vector<eph_t>& getEphRecord() const;
+    void setEphRecord(const vector<eph_t>& newEphRecord);
 
 
 private:
